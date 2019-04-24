@@ -133,6 +133,9 @@ def admipex1(filename):
     c.parameters.mip.strategy.search.set(
         c.parameters.mip.strategy.search.values.traditional)
 
+    # How to set branching strategy: use strong branching 
+    #c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
+
     c.solve()
 
     solution = c.solution
