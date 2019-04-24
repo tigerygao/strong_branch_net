@@ -45,6 +45,10 @@ class MySolve(CPX_CB.SolveCallback):
 class MyBranch(CPX_CB.BranchCallback):
 
     def __call__(self):
+
+        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % self.times_called)
+
+
         self.times_called += 1
         br_type = self.get_branch_type()
         if (br_type == self.branch_type.SOS1 or
@@ -134,9 +138,13 @@ def admipex1(filename):
         c.parameters.mip.strategy.search.values.traditional)
 
     # How to set branching strategy: use strong branching 
-    #c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
+    c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
+
+    print("\n\n**************** Before running .solve() ****************\n\n")
 
     c.solve()
+
+    print("\n\n**************** After running .solve() ****************\n\n")
 
     solution = c.solution
 
