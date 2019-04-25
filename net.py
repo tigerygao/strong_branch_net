@@ -4,7 +4,9 @@ from torch.autograd import Variable
 import numpy as np
 
 class StrongBranchNet(torch.nn.Module):
-    def __init__(self, num_inputs, hidden_nodes=[50, 100, 100, 20]):
+    def __init__(self, num_inputs, hidden_nodes=[30, 50, 50, 10]):
+        super(StrongBranchNet, self).__init__()
+
         self.linear1 = nn.Linear(num_inputs, hidden_nodes[0])
         self.linear2 = nn.Linear(hidden_nodes[0], hidden_nodes[1])
         self.linear3 = nn.Linear(hidden_nodes[1], hidden_nodes[2])
@@ -23,25 +25,27 @@ class StrongBranchNet(torch.nn.Module):
         x = self.activ3(self.linear3(x))
         x = self.activ4(self.linear4(x))
         x = self.activ5(self.linear5(x))
-        return score
+        return x
 
 
 class StrongBranchMimic():
-    def __init__(hyperparams=[], options=[]):
-        self.net = StrongBranchNet(10)
+    def __init__(self, hyperparams=[], options=[]):
+        self.net = StrongBranchNet(6)
         self.criterion = torch.nn.BCELoss()
-        self.optimizer = torch.optim.Adam(net.parameters())
+        self.optimizer = torch.optim.Adam(self.net.parameters())
 
-    def train_net(state, bestcand):
+    def train_net(self, state, bestcand):
         num_cands = len(state[0])
         input = self.compute_input(state)
         y = [0]*num_cands
         y[bestcand] = 1
         num_repeat_pos = num_cands - 2
         for i in range(num_repeat_pos):
-            input.append(input[bestcand])
+            input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
             y.append(1)
-        y = np.asarray(y)
+
+        y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
+        input = Variable(torch.from_numpy(input).float())
 
         y_hat = self.net(input)
         loss = self.criterion(y_hat, y)
@@ -49,21 +53,30 @@ class StrongBranchMimic():
         loss.backward()
         self.optimizer.step()
 
-    def compute_input(state):
+    def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
-        #input = np.concatenate(input, np.full((input.shape[0],1), state[1]), axis=1)
-        common = np.asarray([state[1]])
-        common = np.append(common, [np.average(state[0])])
-        common = np.append(common, [np.])
 
+        common = np.expand_dims(np.array([state[1]]), axis=1)
+        common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
+        common = np.concatenate((common, np.expand_dims([np.std(state[0])], axis=1)), axis=1) #std of solution values
+        common = np.concatenate((common, np.expand_dims([np.average(state[2])], axis=1)), axis=1) #avg of obj. coeffs
+        common = np.concatenate((common, np.expand_dims([np.std(state[2])], axis=1)), axis=1) #std of obj. coeffs
 
         common = np.tile(common,(input.shape[0],1))
-        input = np.concatenate(input, common, axis=1)
+        input = np.concatenate((input, common), axis=1)
+
+        return input
+
+        #TODO:
+        #x_minus_mu = state[0] - np.average(state[0])
+        #x_minus_mu_div_std = x_minus_mu / np.std(state[0])
 
 
 
-    def predict(state):
-        input = self.compute_input(state)
+
+
+    def predict(self, state):
+        input = Variable(torch.from_numpy(self.compute_input(state)).float())
         y_hat = self.net(input)
         return torch.argmax(y_hat, dim=0)
 
@@ -71,8 +84,14 @@ class StrongBranchMimic():
 
 
 if __name__ == '__main__':
-    mimic = StrongBranchMimic(None, None)
+    mimic = StrongBranchMimic([])
     state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
-    best_cand = 5
+    best_cand = 2
 
-    mimic.train_net(state, best_cand)
+    for i in range(100):
+        mimic.train_net(state, best_cand)
+
+    #new_state = ([4, 1.2, 1, -3.4, 4.1, 0], 10, [3, 2, 0.4, 1, -0.9, 1])
+    new_state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
+    pred = mimic.predict(new_state)
+    print(pred)
