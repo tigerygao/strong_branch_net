@@ -71,6 +71,13 @@ class MyBranch(CPX_CB.BranchCallback):
                 br_type == self.branch_type.SOS2):
             return
 
+	for i in range(self.get_num_branches()):
+		print("i is %d" % i);
+		unknown = self.get_branch(i);
+		print(str(unknown) + "\n");
+
+
+
         x = self.get_values() # returns solution values at current node
 
         objval = self.get_objective_value() # 
