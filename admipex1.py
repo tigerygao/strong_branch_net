@@ -71,11 +71,11 @@ class MyBranch(CPX_CB.BranchCallback):
                 br_type == self.branch_type.SOS2):
             return
 
-        x = self.get_values()
+        x = self.get_values() # returns solution values at current node
 
-        objval = self.get_objective_value()
-        obj = self.get_objective_coefficients()
-        feas = self.get_feasibilities()
+        objval = self.get_objective_value() # 
+        obj = self.get_objective_coefficients() # 
+        feas = self.get_feasibilities() # 
 
         maxobj = -CPX.infinity
         maxinf = -CPX.infinity
