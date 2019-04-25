@@ -30,6 +30,22 @@ import cplex.callbacks as CPX_CB
 import sys
 
 
+# Adding stuff for pytorch
+# Taken from https://github.com/pytorch/examples/blob/master/mnist/main.py
+# and https://github.com/utkuozbulak/pytorch-custom-dataset-examples/blob/master/src/custom_datasets.py
+# and https://www.kaggle.com/pinocookie/pytorch-dataset-and-dataloader
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torchvision import datasets, transforms
+import pandas as pd
+import numpy as np 
+from sklearn.model_selection import train_test_split # Will we need this?
+from torch.autograd import Variable
+from torch.utils.data.dataset import Dataset  # For custom datasets
+
 class MySolve(CPX_CB.SolveCallback):
 
     def __call__(self):
