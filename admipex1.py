@@ -71,7 +71,7 @@ class MyBranch(CPX_CB.BranchCallback):
 
     def __call__(self):
 
-        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % self.times_called+1)
+        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % (self.times_called+1))
 
 
         self.times_called += 1
