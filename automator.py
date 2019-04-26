@@ -2,7 +2,7 @@
 from admipex1 import admipex1
 import time
 
-
+'''
 print ("start");
 print ("First get full SB by increasing sb_limit");
 dataset = "data/air04.mps.gz";
@@ -16,11 +16,13 @@ print("%s, %d, %d, %s, %d" % (dataset, strong_branching_limit, num_features, str
 admipex1(dataset, strong_branching_limit, num_features, hidden_layers, epochs);
 end = time.clock();
 print("Runtime: %s" % str(end-start));
+'''
 
 print("Next try small sized network");
 
 dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/sentoy.mps";
+strong_branching_limit = 9; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [10, 20, 20, 10];
 epochs = 5;
@@ -31,8 +33,8 @@ admipex1(dataset, strong_branching_limit, num_features, hidden_layers, epochs);
 end = time.clock();
 print("Runtime: %s" % str(end-start));
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [10, 20, 20, 10];
 epochs = 10;
@@ -44,8 +46,8 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [10, 20, 20, 10];
 epochs = 20;
@@ -59,8 +61,8 @@ print("Runtime: %s" % str(end-start));
 
 print("Now med sized network");
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 50, 50, 10];
 epochs = 5;
@@ -72,8 +74,8 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 50, 50, 10];
 epochs = 10;
@@ -85,8 +87,8 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 50, 50, 10];
 epochs = 20;
@@ -101,8 +103,8 @@ print("Runtime: %s" % str(end-start));
 
 print("Now try big a$$ network");
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 100, 100, 10];
 epochs = 5;
@@ -114,8 +116,8 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 100, 100, 10];
 epochs = 10;
@@ -127,8 +129,8 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 
 
-dataset = "data/air04.mps.gz";
-strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+#dataset = "data/air04.mps.gz";
+#strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 100, 100, 10];
 epochs = 20;

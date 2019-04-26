@@ -32,7 +32,12 @@ class StrongBranchMimic():
     def __init__(self, num_inputs, hidden_nodes, epochs, hyperparams=[], options=[]):
         #self.net = StrongBranchNet(num_inputs, hidden_nodes)
         self.net = StrongBranchNet(num_inputs)
-        #self.net.cuda(); # Sad!
+        self.net.cuda(); # Sad!
+
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cpu")
+        self.net.to(self.device);
+        
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
         self.epochs = epochs;
@@ -66,6 +71,10 @@ class StrongBranchMimic():
         y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
         input = Variable(torch.from_numpy(input).float())
 
+        #print("Sending to GPU");
+        y = y.to(self.device);
+        input = input.to(self.device);
+
         y_hat = self.net(input)
         loss = self.criterion(y_hat, y)
         self.optimizer.zero_grad()
@@ -76,7 +85,7 @@ class StrongBranchMimic():
     def trainOnce(self, state2d, bestcand2d):
         #print("inside trainOnce");        
         for e in range(self.epochs):
-            print("Once per epoch");
+            print("Epoch %d" % e);
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
                 state = state2d[i];
                 bestcand = bestcand2d[i]
@@ -121,8 +130,11 @@ class StrongBranchMimic():
 
 
     def predict(self, state):
+        #print("Inside predict");
         input = Variable(torch.from_numpy(self.compute_input(state)).float())
-        y_hat = self.net(input)
+        #print("after input");
+        y_hat = self.net(input.to(self.device))
+        #print("after y_hat");
         return torch.argmax(y_hat, dim=0)
 
 
