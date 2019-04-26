@@ -116,7 +116,7 @@ class MyBranch(CPX_CB.BranchCallback):
 		#print("In network else statement");
 		
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
-		print("predicted_cand: %s" % str(predicted_candidate.item()));	
+		print("iter %d\tpredicted_cand: %s" % (self.times_called, str(predicted_candidate.item())));	
 	
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
@@ -204,6 +204,7 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
         c.parameters.mip.strategy.search.values.traditional)
 
     c.parameters.mip.display.set(0); # Reduce amount printed while solving
+    c.parameters.mip.limits.nodes.set(10000);
 
     # How to set branching strategy: use strong branching 
     c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
