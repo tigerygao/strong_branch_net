@@ -73,58 +73,8 @@ class MyBranch(CPX_CB.BranchCallback):
 	
         x = self.get_values() # returns solution values at current node
 
-	''' # Who needs print statements anyway
-	print("get_num_cols: %s" % self.get_num_cols())
-
-	for i in range(self.get_num_branches()):
-		print("i is %d" % i);
-		unknown = self.get_branch(i);
-		print(str(unknown) + "\n");
-
-	# TRY PRINTING LIST OF VARIABLES, OR X OR SOMETHING??
-	print("get_node_data: %s" % str(self.get_node_data()));
-
-	print("get_values: %s" % str(x));
-	print("sizeof get_values: %d" % len(x));
-
-	print("num_iters: %d" % self.get_num_iterations());
-	'''
 	
         objval = self.get_objective_value() # 
-        ''' # Commenting out the modifications that came with this file, NETWORK TIME 
-	obj = self.get_objective_coefficients() # 
-        feas = self.get_feasibilities() # 
-
-        maxobj = -CPX.infinity
-        maxinf = -CPX.infinity
-        bestj = -1
-
-        for j in range(len(x)):
-            if feas[j] == self.feasibility_status.infeasible:
-                xj_inf = x[j] - floor(x[j])
-                if xj_inf > 0.5:
-                    xj_inf = 1.0 - xj_inf
-
-                if (xj_inf >= maxinf and
-                        (xj_inf > maxinf or fabs(obj[j]) >= maxobj)):
-                    bestj = j
-                    maxinf = xj_inf
-                    maxobj = fabs(obj[j])
-
-        if bestj < 0:
-            return
-
-	print("bestj = %d" % bestj);
-
-
-        xj_lo = floor(x[bestj])
-        # the (bestj, xj_lo, direction) triple can be any python object to
-        # associate with a node
-        self.make_branch(objval, variables=[(bestj, "L", xj_lo + 1)],
-                         node_data=(bestj, xj_lo, "UP"))
-        self.make_branch(objval, variables=[(bestj, "U", xj_lo)],
-                         node_data=(bestj, xj_lo, "DOWN"))
-        # equivalent to
         # self.make_branch(
         #     objval,
         #     constraints=[([[bestj], [1.0]], "G", float(xj_lo + 1))],
@@ -133,7 +83,6 @@ class MyBranch(CPX_CB.BranchCallback):
         #     objval,
         #     constraints=[([[bestj], [1.0]], "L", float(xj_lo))],
         #     node_data=(bestj, xj_lo, "DOWN"))
-	'''
 
 	# Assuming rn that this is CPLEX's selection	
 	for i in range(self.get_num_branches()):
@@ -183,7 +132,9 @@ def admipex1(filename):
     c.parameters.mip.interval.set(1)
     c.parameters.preprocessing.linear.set(0)
     c.parameters.mip.strategy.search.set(
-        c.parameters.mip.strategy.search.values.traditional)
+    c.parameters.mip.strategy.search.values.traditional)
+
+    c.parameters.mip.display.set(0); # Reduce amount printed while solving
 
     # How to set branching strategy: use strong branching 
     c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
