@@ -22,8 +22,8 @@ print("Next try small sized network");
 
 dataset = "data/air04.mps.gz";
 #dataset = "data/sentoy.mps";
-strong_branching_limit = 9; # Set very high to be 100% (full?) strong branching
-num_features = 6; # How modify the set of features from here?
+strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
+num_features = 7; # How modify the set of features from here?
 hidden_layers = [10, 20, 20, 10];
 epochs = 5;
 
