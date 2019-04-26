@@ -60,7 +60,7 @@ class StrongBranchMimic():
         loss.backward()
         self.optimizer.step()
 
-    def trainOnce(self, state2d, bestcand2d):
+    def trainOnce(self, state2d=self.trainingData, bestcand2d=self.trainingLabels):
         
         for e in range(self.epochs):
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
