@@ -116,7 +116,7 @@ class MyBranch(CPX_CB.BranchCallback):
 		#print("In network else statement");
 		
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
-		#print("predicted_cand: %s" % str(predicted_candidate));	
+		print("predicted_cand: %s" % str(predicted_candidate));	
 	
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
@@ -182,7 +182,6 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
 
     global mynet;
     mynet = StrongBranchMimic(num_features, hl, epochs);   
-
 
     # Random seeds
     #c.parameters.randomseed.set(0); # Do we want to fix this? Maybe average over it? TODO https://www.ibm.com/developerworks/community/forums/html/topic?id=c22d7bf0-3e4b-4191-a3c7-167d996b46cd
