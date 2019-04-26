@@ -4,14 +4,15 @@ import time
 from datetime import datetime
 
 # just for preallocating size of arrays, if you run more tests than this just increase this number
-max = 1000;
+n = 1000;
 
 # List of things we can change in test runs
-dataset                         = [];
-strong_branching_limit          = [];
-num_features                    = [];
-hidden_layers                   = []; # for now must be 4 layers
-epochs                          = [];
+dataset                         = [None]*n;
+strong_branching_limit          = [None]*n;
+num_features                    = [None]*n;
+hidden_layers                   = [None]*n; # for now must be 4 layers
+epochs                          = [None]*n;
+
 #num_random_seeds                = []; # Hold off for now
 
 # Holds output filenames
