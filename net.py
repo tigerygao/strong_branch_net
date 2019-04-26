@@ -74,6 +74,7 @@ class StrongBranchMimic():
     def trainOnce(self, state2d, bestcand2d):
         #print("inside trainOnce");        
         for e in range(self.epochs):
+            print("Once per epoch");
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
                 state = state2d[i];
                 bestcand = bestcand2d[i]

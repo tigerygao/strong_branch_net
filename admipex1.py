@@ -52,7 +52,7 @@ import time
 
 
 # This will eventually come from tester class
-strong_branching_limit = 10;
+strong_branching_limit = 100000000;
 
 # How about this? If only there was a way to boost::bind or something
 # Possible __init__ call for CPX_CB.BranchCallback class?
