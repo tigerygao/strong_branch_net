@@ -106,7 +106,7 @@ class MyBranch(CPX_CB.BranchCallback):
 			#print(str(candidate[1][0][0]));	
 			#print( "***** After prints *****"); # Finally learned how to index that
 
-		if candidate is not None:
+		if candidate is not None and candidate[1] != []:
 			# Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
 			mynet.train((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
 
@@ -124,13 +124,17 @@ class MyBranch(CPX_CB.BranchCallback):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
 			print(str(candidate));
+			print(candidate[1]);
 			# I'M PRETTY SURE WE WILL NEED THE NETWORK TO OUTPUT THE NEW BOUNDS TOO
 			#candidate[1][0][0] = predicted_candidate; # 'tUpLe' ObJeCt DoEs NoT sUpPoRt ItEm AsSiGnMeNt
-			candidate = (candidate[0], [(predicted_candidate.item(), candidate[1][0][1], candidate[1][0][2])]);
-			print(str(candidate) + "\n");
-			
-			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
-			#print(str(candidate[1]));	
+                        
+		        if candidate is not None and candidate[1] != []:
+                                # Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
+                                candidate = (candidate[0], [(predicted_candidate.item(), candidate[1][0][1], candidate[1][0][2])]);
+                                print(str(candidate) + "\n");
+                                
+                                self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
+                                #print(str(candidate[1]));	
 		
 
 

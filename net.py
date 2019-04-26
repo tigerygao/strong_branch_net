@@ -53,6 +53,25 @@ class StrongBranchMimic():
         loss.backward()
         self.optimizer.step()
 
+    def trainOnce(self, state, bestcand):
+        num_cands = len(state[0])
+        input = self.compute_input(state)
+        y = [0]*num_cands
+        y[bestcand] = 1
+        num_repeat_pos = num_cands - 2
+        for i in range(num_repeat_pos):
+            input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
+            y.append(1)
+
+        y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
+        input = Variable(torch.from_numpy(input).float())
+
+        y_hat = self.net(input)
+        loss = self.criterion(y_hat, y)
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+    
     def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
 
@@ -84,6 +103,8 @@ class StrongBranchMimic():
 
 
 if __name__ == '__main__':
+    torch.manual_seed(0) 
+
     mimic = StrongBranchMimic([])
     state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
