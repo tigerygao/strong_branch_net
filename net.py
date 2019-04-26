@@ -38,8 +38,8 @@ class StrongBranchMimic():
         self.trainingLabels = [];
 
     def addSample(self, state, bestcand):
-        self.trainingData += state;
-        self.trainingLabels += bestcand;
+        self.trainingData = [self.trainingData, state];
+        self.trainingLabels = [self.trainingLabels, bestcand];
 
     def train(self, state, bestcand):
         num_cands = len(state[0])
@@ -60,7 +60,8 @@ class StrongBranchMimic():
         loss.backward()
         self.optimizer.step()
 
-    def trainOnce(self, state2d=self.trainingData, bestcand2d=self.trainingLabels):
+    #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
+    def trainOnce(self, state2d, bestcand2d):
         
         for e in range(self.epochs):
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
@@ -68,6 +69,12 @@ class StrongBranchMimic():
                 bestcand = bestcand2d[i]
 
                 self.train(state, bestcand);
+
+    def getTrainingData(self):
+        return self.trainingData;
+
+    def getTrainingLabels(self):
+        return self.trainingLabels;
 
     
     def compute_input(self, state):
