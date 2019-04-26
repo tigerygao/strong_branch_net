@@ -34,7 +34,7 @@ import sys
 # Taken from https://github.com/pytorch/examples/blob/master/mnist/main.py
 # and https://github.com/utkuozbulak/pytorch-custom-dataset-examples/blob/master/src/custom_datasets.py
 # and https://www.kaggle.com/pinocookie/pytorch-dataset-and-dataloader
-
+'''
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -45,6 +45,15 @@ import numpy as np
 from sklearn.model_selection import train_test_split # Will we need this?
 from torch.autograd import Variable
 from torch.utils.data.dataset import Dataset  # For custom datasets
+'''
+
+from net import StrongBranchMimic
+
+
+
+# This will eventually come from tester class
+strong_branching_limit = 10;
+
 
 class MySolve(CPX_CB.SolveCallback):
 
@@ -62,19 +71,39 @@ class MyBranch(CPX_CB.BranchCallback):
 
     def __call__(self):
 
-        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % self.times_called)
+        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % self.times_called+1)
 
 
         self.times_called += 1
-        br_type = self.get_branch_type()
-        if (br_type == self.branch_type.SOS1 or
-                br_type == self.branch_type.SOS2):
-            return
-	
-        x = self.get_values() # returns solution values at current node
 
+	# Here put data that will be needed either way
+        x = self.get_values() 
+        objval = self.get_objective_value() 
+
+	if self.times_called < strong_branching_limit:
+		# Use strong branching
+		for i in range(self.get_num_branches()):
+			#print("i is %d" % i);
+			candidate = self.get_branch(i);
+			#print(str(candidate) + "\n");
+			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
 	
-        objval = self.get_objective_value() # 
+	else:
+		# NETWORK TIME
+		# For now just check whether enters this properly
+		print("In network else statement");
+		for i in range(self.get_num_branches()):
+			#print("i is %d" % i);
+			candidate = self.get_branch(i);
+			#print(str(candidate) + "\n");
+			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
+		
+
+        #br_type = self.get_branch_type()
+        #if (br_type == self.branch_type.SOS1 or
+        #        br_type == self.branch_type.SOS2):
+        #    return
+	
         # self.make_branch(
         #     objval,
         #     constraints=[([[bestj], [1.0]], "G", float(xj_lo + 1))],
@@ -84,12 +113,6 @@ class MyBranch(CPX_CB.BranchCallback):
         #     constraints=[([[bestj], [1.0]], "L", float(xj_lo))],
         #     node_data=(bestj, xj_lo, "DOWN"))
 
-	# Assuming rn that this is CPLEX's selection	
-	for i in range(self.get_num_branches()):
-		print("i is %d" % i);
-		candidate = self.get_branch(i);
-		print(str(candidate) + "\n");
-		self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
 	
 
 	print("\n\n**************** Exiting branch callback ****************\n\n")
@@ -153,10 +176,12 @@ def admipex1(filename):
     print(solution.status[solution.get_status()])
     print("Objective value = ", solution.get_objective_value())
     print()
+    '''
     x = solution.get_values(0, c.variables.get_num() - 1)
     for j in range(c.variables.get_num()):
         if fabs(x[j]) > 1.0e-10:
             print("Column %d: Value = %17.10g" % (j, x[j]))
+    '''
 
     print("Solve callback was called ", solve_instance.times_called, "times")
     print("Branch callback was called ", branch_instance.times_called, "times")
