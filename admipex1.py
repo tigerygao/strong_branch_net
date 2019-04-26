@@ -88,7 +88,7 @@ class MyBranch(CPX_CB.BranchCallback):
 		print("num_branches: %d" % self.get_num_branches());
 
 	#print("num_branches: %d" % self.get_num_branches());
-	print("num vars is %d" % self.get_num_cols());
+	#print("num vars is %d" % self.get_num_cols());
 
 
 	if self.times_called < strong_branching_limit:
@@ -99,9 +99,9 @@ class MyBranch(CPX_CB.BranchCallback):
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
-			print(str(candidate) + "\n");
+			#print(str(candidate) + "\n");
 			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
-			print(str(candidate[1]));	
+			#print(str(candidate[1]));	
 			#print( "***** next *****");
 			#print(str(candidate[1][0][0]));	
 			#print( "***** After prints *****"); # Finally learned how to index that
@@ -109,9 +109,9 @@ class MyBranch(CPX_CB.BranchCallback):
 		if candidate is not None and candidate[1] != []:
 			# Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
 			#mynet.train((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
-                        print("Before add sample");
+                        #print("Before add sample");
                         mynet.addSample((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
-                        print("After add sample");
+                        #print("After add sample");
 
 	
 	else:
@@ -121,12 +121,12 @@ class MyBranch(CPX_CB.BranchCallback):
                         start = time.clock();
                         mynet.trainOnce(mynet.getTrainingData(), mynet.getTrainingLabels());
                         end = time.clock();
-                        print("Done training network, took %s" % str(start-end));       
+                        print("Done training network, took %s" % str(end-start));       
 
 
 		# NETWORK TIME
 		# For now just check whether enters this properly
-		print("In network else statement");
+		#print("In network else statement");
 		
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
 		#print("predicted_cand: %s" % str(predicted_candidate));	
@@ -134,15 +134,15 @@ class MyBranch(CPX_CB.BranchCallback):
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
-			print(str(candidate));
-			print(candidate[1]);
+			#print(str(candidate));
+			#print(candidate[1]);
 			# I'M PRETTY SURE WE WILL NEED THE NETWORK TO OUTPUT THE NEW BOUNDS TOO
 			#candidate[1][0][0] = predicted_candidate; # 'tUpLe' ObJeCt DoEs NoT sUpPoRt ItEm AsSiGnMeNt
                         
 		        if candidate is not None and candidate[1] != []:
                                 # Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
                                 candidate = (candidate[0], [(predicted_candidate.item(), candidate[1][0][1], candidate[1][0][2])]);
-                                print(str(candidate) + "\n");
+                                #print(str(candidate) + "\n");
                                 
                                 self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
                                 #print(str(candidate[1]));	

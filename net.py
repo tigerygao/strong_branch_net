@@ -29,7 +29,7 @@ class StrongBranchNet(torch.nn.Module):
 
 
 class StrongBranchMimic():
-    def __init__(self, hyperparams=[], options=[], epochs=1):
+    def __init__(self, hyperparams=[], options=[], epochs=10):
         self.net = StrongBranchNet(6)
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
@@ -38,25 +38,25 @@ class StrongBranchMimic():
         self.trainingLabels = [];
 
     def addSample(self, state, bestcand):
-        print("Inside add Sample");
+        #print("Inside add Sample");
         #self.trainingData = [self.trainingData, state];
         #self.trainingLabels = [self.trainingLabels, bestcand];
         self.trainingData.append(state);
         self.trainingLabels.append(bestcand);
 
     def train(self, state, bestcand):
-        print("Made it to train");
+        #print("Made it to train");
 
         num_cands = len(state[0])
-        print("Made it to 1");
+        #print("Made it to 1");
         input = self.compute_input(state)
-        print("Made it to 2");
+        #print("Made it to 2");
         y = [0]*num_cands
-        print("Made it to 3");
+        #print("Made it to 3");
         y[bestcand] = 1
-        print("Made it to 4");
+        #print("Made it to 4");
         num_repeat_pos = num_cands - 2
-        print("Made it to train loop");
+        #print("Made it to train loop");
         for i in range(num_repeat_pos):
             input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
             y.append(1)
@@ -72,12 +72,12 @@ class StrongBranchMimic():
 
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
     def trainOnce(self, state2d, bestcand2d):
-        print("inside trainOnce");        
+        #print("inside trainOnce");        
         for e in range(self.epochs):
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
                 state = state2d[i];
                 bestcand = bestcand2d[i]
-                print("before self.train");     
+                #print("before self.train");     
                 self.train(state, bestcand);
 
     def getTrainingData(self):
@@ -90,19 +90,19 @@ class StrongBranchMimic():
     def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
         
-        print("Got to 0");
+        #print("Got to 0");
         common = np.expand_dims(np.array([state[1]]), axis=1)
-        print("Got to 1");
-        print(state[0]);
-        print(type(state[0]));
+        #print("Got to 1");
+        #print(state[0]);
+        #print(type(state[0]));
         common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
-        print("Got to 2");
+        #print("Got to 2");
         common = np.concatenate((common, np.expand_dims([np.std(state[0])], axis=1)), axis=1) #std of solution values
-        print("Got to 3");
+        #print("Got to 3");
         common = np.concatenate((common, np.expand_dims([np.average(state[2])], axis=1)), axis=1) #avg of obj. coeffs
-        print("Got to 4");
+        #print("Got to 4");
         common = np.concatenate((common, np.expand_dims([np.std(state[2])], axis=1)), axis=1) #std of obj. coeffs
-        print("Got to 5");
+        #print("Got to 5");
 
         common = np.tile(common,(input.shape[0],1))
         input = np.concatenate((input, common), axis=1)
