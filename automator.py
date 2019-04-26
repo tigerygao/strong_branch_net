@@ -2,11 +2,24 @@
 from admipex1 import admipex1
 import time
 
-'''
+
+dataset                 = [];
+strong_branching_limit  = [];
+num_features            = [];
+hidden_layers           = [];
+epochs                  = [];
+num_random_seeds        = [];
+
+
+
+# If you 
+
+
+''' # Just strong branching by setting sbl very high
 print ("start");
 print ("First get full SB by increasing sb_limit");
 dataset = "data/air04.mps.gz";
-strong_branching_limit = 100; # Set very high to be 100% (full?) strong branching
+strong_branching_limit = 100000; # Set very high to be 100% (full?) strong branching
 num_features = 6; # How modify the set of features from here?
 hidden_layers = [30, 50, 50, 10];
 epochs = 3;
