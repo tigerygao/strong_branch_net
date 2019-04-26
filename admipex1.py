@@ -116,7 +116,7 @@ class MyBranch(CPX_CB.BranchCallback):
 		#print("In network else statement");
 		
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
-		print("predicted_cand: %s" % str(predicted_candidate));	
+		print("predicted_cand: %s" % str(predicted_candidate.item()));	
 	
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
