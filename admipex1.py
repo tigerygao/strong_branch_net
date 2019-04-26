@@ -52,7 +52,7 @@ import time
 
 
 # This will eventually come from tester class
-strong_branching_limit = 10;
+strong_branching_limit = 100000;
 
 # How about this? If only there was a way to boost::bind or something
 # Possible __init__ call for CPX_CB.BranchCallback class?
@@ -78,7 +78,10 @@ class MyBranch(CPX_CB.BranchCallback):
         #print("\n\n**************** Inside branch callback **************** (%d) \n\n" % (self.times_called+1))
 
 
-        self.times_called += 1
+        self.times_called += 1;
+
+        print("sbl: %d" % strong_branching_limit);
+
 
 	# Here put data that will be needed either way
         x = self.get_values() 
@@ -187,8 +190,12 @@ class MyNode(CPX_CB.NodeCallback):
         # print "selected node with data", self.get_node_data(bestnode)
 
 
-def admipex1(filename):
+def admipex1(filename, sb_limit=100000000):
     c = CPX.Cplex(filename)
+    
+    global strong_branching_limit;
+    strong_branching_limit = sb_limit;
+
 
     # Random seeds
     #c.parameters.randomseed.set(0); # Do we want to fix this? Maybe average over it? TODO https://www.ibm.com/developerworks/community/forums/html/topic?id=c22d7bf0-3e4b-4191-a3c7-167d996b46cd
@@ -208,7 +215,7 @@ def admipex1(filename):
     c.parameters.mip.interval.set(1)
     c.parameters.preprocessing.linear.set(0)
     c.parameters.mip.strategy.search.set(
-    c.parameters.mip.strategy.search.values.traditional)
+        c.parameters.mip.strategy.search.values.traditional)
 
     c.parameters.mip.display.set(0); # Reduce amount printed while solving
 
