@@ -37,7 +37,7 @@ class StrongBranchMimic():
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         #self.device = torch.device("cpu")
         self.net.to(self.device);
-        
+
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
         self.epochs = epochs;
@@ -83,13 +83,13 @@ class StrongBranchMimic():
 
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
     def trainOnce(self, state2d, bestcand2d):
-        #print("inside trainOnce");        
+        #print("inside trainOnce");
         for e in range(self.epochs):
             print("Epoch %d" % e);
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
                 state = state2d[i];
                 bestcand = bestcand2d[i]
-                #print("before self.train");     
+                #print("before self.train");
                 self.train(state, bestcand);
 
     def getTrainingData(self):
@@ -98,10 +98,12 @@ class StrongBranchMimic():
     def getTrainingLabels(self):
         return self.trainingLabels;
 
-    
+
     def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
-        
+        fractionality = np.absolute((input - np.floor(input)) - 0.5)
+        input = np.concatenate((input, fractionality), axis=1)
+
         #print("Got to 0");
         common = np.expand_dims(np.array([state[1]]), axis=1)
         #print("Got to 1");
