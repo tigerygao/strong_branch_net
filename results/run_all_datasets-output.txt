@@ -1,0 +1,653 @@
+tkeady5@tkeady5-desktop:~/Documents/ibm/ILOG/CPLEX_Studio129/cplex/examples/src/python$ ./run_all_datasets.sh 
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/30n20b8.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  Obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  302.0
+
+Solve callback was called  174155 times
+Branch callback was called  143182 times
+Node callback was called  286356 times
+
+real	37m28.786s
+user	37m33.648s
+sys	0m0.252s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/30n20b8.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/acc-tight5.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  r_0
+Selected RHS        name:  RHS
+Selected bound      name:  BND
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  0.0
+
+Solve callback was called  10525 times
+Branch callback was called  3194 times
+Node callback was called  6377 times
+
+real	3m37.060s
+user	3m37.576s
+sys	0m0.016s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/acc-tight5.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/aflow40b.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  total_costs
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  1171.0
+
+Solve callback was called  2352696 times
+Branch callback was called  1063633 times
+Node callback was called  2127247 times
+
+real	151m18.504s
+user	176m34.076s
+sys	0m7.498s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/aflow40b.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/air04.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  COST
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  56137.0
+
+Solve callback was called  12539 times
+Branch callback was called  4999 times
+Node callback was called  9996 times
+
+real	1m40.996s
+user	1m57.872s
+sys	0m0.121s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/air04.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/app1-2.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  OBJROW
+Selected RHS        name:  RHS
+Selected bound      name:  Bound
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  -41.0
+
+Solve callback was called  29409 times
+Branch callback was called  17128 times
+Node callback was called  34073 times
+
+real	8m21.568s
+user	8m30.169s
+sys	0m0.372s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/app1-2.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/ash608gpia-3col.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  103 : MIP_infeasible
+CPLEX Error  1217: No solution exists.
+Traceback (most recent call last):
+  File "admipex1.py", line 166, in <module>
+    admipex1(sys.argv[1])
+  File "admipex1.py", line 146, in admipex1
+    print("Objective value = ", solution.get_objective_value())
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_subinterfaces.py", line 7575, in get_objective_value
+    return CPX_PROC.getobjval(self._env._e, self._cplex._lp)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 2035, in getobjval
+    check_status(env, status)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 303, in __call__
+    raise CplexSolverError(error_string, env, status)
+cplex.exceptions.errors.CplexSolverError: CPLEX Error  1217: No solution exists.
+
+real	0m0.908s
+user	0m0.868s
+sys	0m0.037s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/ash608gpia-3col.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bab5.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^[[A^[[B^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  -105899.8226
+
+Solve callback was called  105380 times
+Branch callback was called  52232 times
+Node callback was called  104424 times
+
+real	30m55.039s
+user	32m40.109s
+sys	0m0.701s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bab5.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/beasleyC3.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  MinOBJ..
+Selected RHS        name:  RHS00001
+Selected bound      name:  BOUND001
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  759.0
+
+Solve callback was called  446897 times
+Branch callback was called  211089 times
+Node callback was called  422129 times
+
+real	19m29.586s
+user	21m15.172s
+sys	0m0.480s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/beasleyC3.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/biella1.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  3109800.76
+
+Solve callback was called  219514 times
+Branch callback was called  106902 times
+Node callback was called  213720 times
+
+real	34m50.479s
+user	34m59.306s
+sys	0m0.680s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/biella1.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bienst2.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  r_0
+Selected RHS        name:  RHS
+Selected bound      name:  BND
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  54.6
+
+Solve callback was called  231960 times
+Branch callback was called  129249 times
+Node callback was called  258485 times
+
+real	19m17.646s
+user	19m29.391s
+sys	0m0.212s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bienst2.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/binkar10_1.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  R1027
+Selected RHS        name:  B
+Selected bound      name:  BOUND
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  6742.200024
+
+Solve callback was called  9009 times
+Branch callback was called  3308 times
+Node callback was called  6609 times
+
+real	0m16.695s
+user	0m20.652s
+sys	0m0.080s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/binkar10_1.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bley_xl1.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  190.0
+
+Solve callback was called  34 times
+Branch callback was called  0 times
+Node callback was called  0 times
+
+real	0m7.750s
+user	0m7.729s
+sys	0m0.120s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bley_xl1.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bnatt350.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  114 : MIP_abort_infeasible
+CPLEX Error  1217: No solution exists.
+Traceback (most recent call last):
+  File "admipex1.py", line 166, in <module>
+    admipex1(sys.argv[1])
+  File "admipex1.py", line 146, in admipex1
+    print("Objective value = ", solution.get_objective_value())
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_subinterfaces.py", line 7575, in get_objective_value
+    return CPX_PROC.getobjval(self._env._e, self._cplex._lp)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 2035, in getobjval
+    check_status(env, status)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 303, in __call__
+    raise CplexSolverError(error_string, env, status)
+cplex.exceptions.errors.CplexSolverError: CPLEX Error  1217: No solution exists.
+
+real	8m20.381s
+user	8m18.422s
+sys	0m0.404s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/bnatt350.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/core2536-691.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  692.0
+
+Solve callback was called  868295 times
+Branch callback was called  388544 times
+Node callback was called  777025 times
+
+real	192m7.311s
+user	197m6.108s
+sys	0m1.588s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/core2536-691.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/cov1075.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  20.0
+
+Solve callback was called  52900 times
+Branch callback was called  22119 times
+Node callback was called  44238 times
+
+real	1m47.882s
+user	1m47.907s
+sys	0m0.028s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/cov1075.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/csched010.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  totdelay
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  114 : MIP_abort_infeasible
+CPLEX Error  1217: No solution exists.
+Traceback (most recent call last):
+  File "admipex1.py", line 166, in <module>
+    admipex1(sys.argv[1])
+  File "admipex1.py", line 146, in admipex1
+    print("Objective value = ", solution.get_objective_value())
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_subinterfaces.py", line 7575, in get_objective_value
+    return CPX_PROC.getobjval(self._env._e, self._cplex._lp)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 2035, in getobjval
+    check_status(env, status)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 303, in __call__
+    raise CplexSolverError(error_string, env, status)
+cplex.exceptions.errors.CplexSolverError: CPLEX Error  1217: No solution exists.
+
+real	116m43.953s
+user	116m36.958s
+sys	0m3.136s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/csched010.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/danoint.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  cong
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  66.5
+
+Solve callback was called  205122 times
+Branch callback was called  92630 times
+Node callback was called  185250 times
+
+real	10m29.995s
+user	10m29.719s
+sys	0m0.172s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/danoint.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/dfn-gwin-UUM.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  39308.0
+
+Solve callback was called  4295372 times
+Branch callback was called  2065788 times
+Node callback was called  4131550 times
+
+real	107m55.330s
+user	112m28.783s
+sys	0m4.506s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/dfn-gwin-UUM.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/eil33-2.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  934.007916
+
+Solve callback was called  4651 times
+Branch callback was called  2720 times
+Node callback was called  5433 times
+
+real	0m32.948s
+user	0m39.758s
+sys	0m0.113s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/eil33-2.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/eilB101.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  1216.920174
+
+Solve callback was called  12029 times
+Branch callback was called  5482 times
+Node callback was called  10950 times
+
+real	1m10.751s
+user	1m10.760s
+sys	0m0.072s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/eilB101.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/enlight13.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  moves
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  71.0
+
+Solve callback was called  2 times
+Branch callback was called  0 times
+Node callback was called  0 times
+
+real	0m0.088s
+user	0m0.073s
+sys	0m0.004s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/enlight13.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/enlight14.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  moves
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  103 : MIP_infeasible
+CPLEX Error  1217: No solution exists.
+Traceback (most recent call last):
+  File "admipex1.py", line 166, in <module>
+    admipex1(sys.argv[1])
+  File "admipex1.py", line 146, in admipex1
+    print("Objective value = ", solution.get_objective_value())
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_subinterfaces.py", line 7575, in get_objective_value
+    return CPX_PROC.getobjval(self._env._e, self._cplex._lp)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 2035, in getobjval
+    check_status(env, status)
+  File "/usr/local/lib/python2.7/dist-packages/cplex/_internal/_procedural.py", line 303, in __call__
+    raise CplexSolverError(error_string, env, status)
+cplex.exceptions.errors.CplexSolverError: CPLEX Error  1217: No solution exists.
+
+real	0m0.061s
+user	0m0.054s
+sys	0m0.007s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/enlight14.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/ex9.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  COST
+Selected RHS        name:  RHS1
+Selected bound      name:  BND1
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+Solution status =  101 : MIP_optimal
+Objective value =  81.0
+
+Solve callback was called  0 times
+Branch callback was called  0 times
+Node callback was called  0 times
+
+real	0m2.459s
+user	0m2.404s
+sys	0m0.045s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/ex9.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+
+Doing /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/glass4.mps.gz
+
+Selected objective sense:  MINIMIZE
+Selected objective  name:  obj
+Selected RHS        name:  rhs
+Selected bound      name:  bnd
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Preprocessing_Linear                    0
+CPXPARAM_MIP_Display                             0
+CPXPARAM_MIP_Strategy_Search                     1
+CPXPARAM_MIP_Interval                            1
+^C
+KeyboardInterrupt
+Solution status =  113 : MIP_abort_feasible
+Objective value =  1500013500.0
+
+Solve callback was called  25618406 times
+Branch callback was called  19606136 times
+Node callback was called  39212141 times
+
+real	366m42.314s
+user	376m43.555s
+sys	0m9.073s
+Done with /home/tkeady5/Documents/miplib2010-1.1.3/instances/miplib2010/glass4.mps.gz
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh
+
+

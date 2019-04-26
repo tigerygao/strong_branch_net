@@ -19,4 +19,13 @@ Directory structure:
 At what level should we switch up CPLEX random seeds?? should we ever switch up torch random seeds?
 
 
+OTHER FILES
+
+run_all_datasets-output.txt is the terminal output of running run_all_datasets.sh on some of the instances in MIPLIB2010
+run_all_datasets_2-output.txt is the same as the above except going in alphabetical order starting from the letter 'n'
+
+Criterion for selecting candidate instances for our project:
+    Solved in reasonable time (<15 mins, <10 is ideal) and preferrably has a large number of branch callbacks
+
+
 
