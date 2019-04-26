@@ -29,10 +29,17 @@ class StrongBranchNet(torch.nn.Module):
 
 
 class StrongBranchMimic():
-    def __init__(self, hyperparams=[], options=[]):
+    def __init__(self, hyperparams=[], options=[], epochs=1):
         self.net = StrongBranchNet(6)
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
+        self.epochs = epochs;
+        self.trainingData = [];
+        self.trainingLabels = [];
+
+    def addSample(self, state, bestcand):
+        self.trainingData += state;
+        self.trainingLabels += bestcand;
 
     def train(self, state, bestcand):
         num_cands = len(state[0])
@@ -53,24 +60,15 @@ class StrongBranchMimic():
         loss.backward()
         self.optimizer.step()
 
-    def trainOnce(self, state, bestcand):
-        num_cands = len(state[0])
-        input = self.compute_input(state)
-        y = [0]*num_cands
-        y[bestcand] = 1
-        num_repeat_pos = num_cands - 2
-        for i in range(num_repeat_pos):
-            input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
-            y.append(1)
+    def trainOnce(self, state2d=self.trainingData, bestcand2d=self.trainingLabels):
+        
+        for e in range(self.epochs):
+            for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
+                state = state2d[i];
+                bestcand = bestcand2d[i]
 
-        y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
-        input = Variable(torch.from_numpy(input).float())
+                self.train(state, bestcand);
 
-        y_hat = self.net(input)
-        loss = self.criterion(y_hat, y)
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
     
     def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
