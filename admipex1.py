@@ -75,7 +75,7 @@ class MyBranch(CPX_CB.BranchCallback):
 
     def __call__(self):
 
-        print("\n\n**************** Inside branch callback **************** (%d) \n\n" % (self.times_called+1))
+        #print("\n\n**************** Inside branch callback **************** (%d) \n\n" % (self.times_called+1))
 
 
         self.times_called += 1
@@ -84,18 +84,36 @@ class MyBranch(CPX_CB.BranchCallback):
         x = self.get_values() 
         objval = self.get_objective_value() 
 
+	if self.get_num_branches() != 2:
+		print("num_branches: %d" % self.get_num_branches());
+
+	#print("num_branches: %d" % self.get_num_branches());
+
 	if self.times_called < strong_branching_limit:
 		# Use strong branching
+
+		candidate = None;
+		
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
 			#print(str(candidate) + "\n");
 			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
+			#print(str(candidate[1]));	
+			#print( "***** next *****");
+			#print(str(candidate[1][0][0]));	
+			#print( "***** After prints *****"); # Finally learned how to index that
+
+		if candidate is not None:
+			# Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
+			mynet.train((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
+
+
 	
 	else:
 		# NETWORK TIME
 		# For now just check whether enters this properly
-		print("In network else statement");
+		#print("In network else statement");
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
@@ -119,7 +137,7 @@ class MyBranch(CPX_CB.BranchCallback):
 
 	
 
-	print("\n\n**************** Exiting branch callback ****************\n\n")
+	#print("\n\n**************** Exiting branch callback ****************\n\n")
 
 
 class MyNode(CPX_CB.NodeCallback):

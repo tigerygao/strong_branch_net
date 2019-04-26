@@ -34,7 +34,7 @@ class StrongBranchMimic():
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
 
-    def train_net(self, state, bestcand):
+    def train(self, state, bestcand):
         num_cands = len(state[0])
         input = self.compute_input(state)
         y = [0]*num_cands
