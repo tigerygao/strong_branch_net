@@ -54,6 +54,10 @@ from net import StrongBranchMimic
 # This will eventually come from tester class
 strong_branching_limit = 10;
 
+# How about this? If only there was a way to boost::bind or something
+# Possible __init__ call for CPX_CB.BranchCallback class?
+mynet = StrongBranchMimic();
+
 
 class MySolve(CPX_CB.SolveCallback):
 
