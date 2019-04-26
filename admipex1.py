@@ -116,23 +116,14 @@ class MyBranch(CPX_CB.BranchCallback):
 		# NETWORK TIME
 		# For now just check whether enters this properly
 		print("In network else statement");
-		'''for i in range(self.get_num_branches()):
-			#print("i is %d" % i);
-			candidate = self.get_branch(i);
-			#print(str(candidate) + "\n");
-			self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
-		'''
 		
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
-		print("predicted cand: %d" % predicted_candidate);
-		print("predicted cand: %s" % str(type(predicted_candidate)));
-		print("predicted cand: %s" % str(type(predicted_candidate.item())));
-		
+		#print("predicted_cand: %s" % str(predicted_candidate));	
+	
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
-			print(str(candidate) + "\n");
-			print(str(candidate[1]));	
+			print(str(candidate));
 			# I'M PRETTY SURE WE WILL NEED THE NETWORK TO OUTPUT THE NEW BOUNDS TOO
 			#candidate[1][0][0] = predicted_candidate; # 'tUpLe' ObJeCt DoEs NoT sUpPoRt ItEm AsSiGnMeNt
 			candidate = (candidate[0], [(predicted_candidate.item(), candidate[1][0][1], candidate[1][0][2])]);
