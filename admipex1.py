@@ -48,7 +48,7 @@ from torch.utils.data.dataset import Dataset  # For custom datasets
 '''
 
 from net import StrongBranchMimic
-
+import time
 
 
 # This will eventually come from tester class
@@ -108,11 +108,20 @@ class MyBranch(CPX_CB.BranchCallback):
 
 		if candidate is not None and candidate[1] != []:
 			# Train network: (its ok that we grab candidate after the loop since the branching var is always the same)
-			mynet.train((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
-
+			#mynet.train((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
+                        mynet.addSample((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()), candidate[1][0][0]);
 
 	
 	else:
+    
+                if self.times_called == strong_branching_limit:
+                        print("Training network!");
+                        start = time.clock();
+                        mynet.trainOnce();
+                        end = time.clock();
+                        print("Done training network, took %s" % str(start-end));       
+
+
 		# NETWORK TIME
 		# For now just check whether enters this properly
 		print("In network else statement");
