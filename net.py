@@ -39,8 +39,10 @@ class StrongBranchMimic():
 
     def addSample(self, state, bestcand):
         print("Inside add Sample");
-        self.trainingData = [self.trainingData, state];
-        self.trainingLabels = [self.trainingLabels, bestcand];
+        #self.trainingData = [self.trainingData, state];
+        #self.trainingLabels = [self.trainingLabels, bestcand];
+        self.trainingData.append(state);
+        self.trainingLabels.append(bestcand);
 
     def train(self, state, bestcand):
         print("Made it to train");
@@ -92,6 +94,7 @@ class StrongBranchMimic():
         common = np.expand_dims(np.array([state[1]]), axis=1)
         print("Got to 1");
         print(state[0]);
+        print(type(state[0]));
         common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
         print("Got to 2");
         common = np.concatenate((common, np.expand_dims([np.std(state[0])], axis=1)), axis=1) #std of solution values
