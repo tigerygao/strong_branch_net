@@ -103,7 +103,7 @@ class StrongBranchMimic():
 
 
 if __name__ == '__main__':
-    torch.manual_seed(0) 
+    torch.manual_seed(0);
 
     mimic = StrongBranchMimic([])
     state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])

@@ -179,6 +179,9 @@ class MyNode(CPX_CB.NodeCallback):
 def admipex1(filename):
     c = CPX.Cplex(filename)
 
+    # Random seeds
+    #c.parameters.randomseed.set(0); # Do we want to fix this? Maybe average over it? TODO https://www.ibm.com/developerworks/community/forums/html/topic?id=c22d7bf0-3e4b-4191-a3c7-167d996b46cd
+
     # sys.stdout is the default output stream for log and results
     # so these lines may be omitted
     c.set_log_stream(sys.stdout)
