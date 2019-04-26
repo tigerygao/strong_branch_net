@@ -70,18 +70,29 @@ class MyBranch(CPX_CB.BranchCallback):
         if (br_type == self.branch_type.SOS1 or
                 br_type == self.branch_type.SOS2):
             return
+	
+        x = self.get_values() # returns solution values at current node
+
+	
+	print("get_num_cols: %s" % self.get_num_cols())
 
 	for i in range(self.get_num_branches()):
 		print("i is %d" % i);
 		unknown = self.get_branch(i);
 		print(str(unknown) + "\n");
 
+	# TRY PRINTING LIST OF VARIABLES, OR X OR SOMETHING??
+	print("get_node_data: %s" % str(self.get_node_data()));
 
+	print("get_values: %s" % str(x));
+	print("sizeof get_values: %d" % len(x));
 
-        x = self.get_values() # returns solution values at current node
-
+	print("num_iters: %d" % self.get_num_iterations());
+	
+	
         objval = self.get_objective_value() # 
-        obj = self.get_objective_coefficients() # 
+        '''
+	obj = self.get_objective_coefficients() # 
         feas = self.get_feasibilities() # 
 
         maxobj = -CPX.infinity
@@ -103,6 +114,9 @@ class MyBranch(CPX_CB.BranchCallback):
         if bestj < 0:
             return
 
+	print("bestj = %d" % bestj);
+
+
         xj_lo = floor(x[bestj])
         # the (bestj, xj_lo, direction) triple can be any python object to
         # associate with a node
@@ -119,6 +133,17 @@ class MyBranch(CPX_CB.BranchCallback):
         #     objval,
         #     constraints=[([[bestj], [1.0]], "L", float(xj_lo))],
         #     node_data=(bestj, xj_lo, "DOWN"))
+	'''
+
+	# Assuming rn that this is CPLEX's selection	
+	for i in range(self.get_num_branches()):
+		print("i is %d" % i);
+		unknown = self.get_branch(i);
+		print(str(unknown) + "\n");
+		self.make_branch(unknown[0], unknown[1]); # leaving node_data blank for now 
+	
+
+	print("\n\n**************** Exiting branch callback ****************\n\n")
 
 
 class MyNode(CPX_CB.NodeCallback):
