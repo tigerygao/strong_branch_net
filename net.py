@@ -55,6 +55,8 @@ class StrongBranchMimic():
 
     def compute_input(self, state):
         input = np.expand_dims(np.array(state[0]), axis=1)
+        fractionality = np.absolute((input - np.floor(input)) - 0.5)
+        input = np.concatenate((input, fractionality), axis=1)
 
         common = np.expand_dims(np.array([state[1]]), axis=1)
         common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
