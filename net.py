@@ -29,8 +29,9 @@ class StrongBranchNet(torch.nn.Module):
 
 
 class StrongBranchMimic():
-    def __init__(self, hyperparams=[], options=[], epochs=10):
-        self.net = StrongBranchNet(6)
+    def __init__(self, num_inputs, hidden_nodes, epochs, hyperparams=[], options=[]):
+        #self.net = StrongBranchNet(num_inputs, hidden_nodes)
+        self.net = StrongBranchNet(num_inputs)
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
         self.epochs = epochs;

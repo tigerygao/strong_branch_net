@@ -30,23 +30,6 @@ import cplex.callbacks as CPX_CB
 import sys
 
 
-# Adding stuff for pytorch
-# Taken from https://github.com/pytorch/examples/blob/master/mnist/main.py
-# and https://github.com/utkuozbulak/pytorch-custom-dataset-examples/blob/master/src/custom_datasets.py
-# and https://www.kaggle.com/pinocookie/pytorch-dataset-and-dataloader
-'''
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-from torchvision import datasets, transforms
-import pandas as pd
-import numpy as np 
-from sklearn.model_selection import train_test_split # Will we need this?
-from torch.autograd import Variable
-from torch.utils.data.dataset import Dataset  # For custom datasets
-'''
-
 from net import StrongBranchMimic
 import time
 
@@ -56,7 +39,8 @@ strong_branching_limit = 100000;
 
 # How about this? If only there was a way to boost::bind or something
 # Possible __init__ call for CPX_CB.BranchCallback class?
-mynet = StrongBranchMimic();
+#mynet = StrongBranchMimic();
+mynet = None;
 
 
 class MySolve(CPX_CB.SolveCallback):
@@ -80,7 +64,7 @@ class MyBranch(CPX_CB.BranchCallback):
 
         self.times_called += 1;
 
-        print("sbl: %d" % strong_branching_limit);
+        #print("sbl: %d" % strong_branching_limit);
 
 
 	# Here put data that will be needed either way
@@ -190,11 +174,14 @@ class MyNode(CPX_CB.NodeCallback):
         # print "selected node with data", self.get_node_data(bestnode)
 
 
-def admipex1(filename, sb_limit=100000000):
+def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], epochs=10):
     c = CPX.Cplex(filename)
     
     global strong_branching_limit;
     strong_branching_limit = sb_limit;
+
+    global mynet;
+    mynet = StrongBranchMimic(num_features, hl, epochs);   
 
 
     # Random seeds
