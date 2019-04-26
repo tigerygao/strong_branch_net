@@ -73,7 +73,7 @@ class MyBranch(CPX_CB.BranchCallback):
 	
         x = self.get_values() # returns solution values at current node
 
-	
+	''' # Who needs print statements anyway
 	print("get_num_cols: %s" % self.get_num_cols())
 
 	for i in range(self.get_num_branches()):
@@ -88,10 +88,10 @@ class MyBranch(CPX_CB.BranchCallback):
 	print("sizeof get_values: %d" % len(x));
 
 	print("num_iters: %d" % self.get_num_iterations());
-	
+	'''
 	
         objval = self.get_objective_value() # 
-        '''
+        ''' # Commenting out the modifications that came with this file, NETWORK TIME 
 	obj = self.get_objective_coefficients() # 
         feas = self.get_feasibilities() # 
 
@@ -138,9 +138,9 @@ class MyBranch(CPX_CB.BranchCallback):
 	# Assuming rn that this is CPLEX's selection	
 	for i in range(self.get_num_branches()):
 		print("i is %d" % i);
-		unknown = self.get_branch(i);
-		print(str(unknown) + "\n");
-		self.make_branch(unknown[0], unknown[1]); # leaving node_data blank for now 
+		candidate = self.get_branch(i);
+		print(str(candidate) + "\n");
+		self.make_branch(candidate[0], candidate[1]); # leaving node_data blank for now 
 	
 
 	print("\n\n**************** Exiting branch callback ****************\n\n")
