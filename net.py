@@ -30,7 +30,7 @@ class StrongBranchNet(torch.nn.Module):
 
 class StrongBranchMimic():
     def __init__(self, hyperparams=[], options=[]):
-        self.net = StrongBranchNet(6)
+        self.net = StrongBranchNet(19)
         self.criterion = torch.nn.BCELoss()
         self.optimizer = torch.optim.Adam(self.net.parameters())
 
@@ -54,25 +54,45 @@ class StrongBranchMimic():
         self.optimizer.step()
 
     def compute_input(self, state):
-        input = np.expand_dims(np.array(state[0]), axis=1)
-        fractionality = np.absolute((input - np.floor(input)) - 0.5)
-        input = np.concatenate((input, fractionality), axis=1)
+        ##DYNAMIC FEATURES##
+        input = np.expand_dims(np.array(state[0]), axis=1) #solution vals
+        x_minus_mu = state[0] - np.average(state[0])
+        x_minus_mu_div_std = np.expand_dims(x_minus_mu / np.std(state[0]), axis=1)
+        input = np.concatenate((input, x_minus_mu_div_std), axis=1) #(solution val - mean)/std
 
-        common = np.expand_dims(np.array([state[1]]), axis=1)
+        fractionality = np.expand_dims(np.absolute((input[:,0] - np.floor(input[:,0])) - 0.5), axis=1)
+        input = np.concatenate((input, fractionality), axis=1) #solution fracs
+        frac_minus_mu_div_std = (fractionality - np.average(fractionality))/np.std(fractionality)
+        input = np.concatenate((input, frac_minus_mu_div_std), axis=1) #(frac - mean)/std
+
+        input = np.hstack((input, np.expand_dims(np.array(state[2]), axis=1))) #obj. coeffs
+        coeff_minus_mu = state[2] - np.average(state[2])
+        coeff_minus_mu_div_std = np.expand_dims(coeff_minus_mu / np.std(state[2]), axis=1)
+        input = np.concatenate((input, coeff_minus_mu_div_std), axis=1) #(obj. coeff - mean)/std
+
+        ##STATIC FEATURES##
+        common = np.expand_dims(np.array([state[1]]), axis=1) #obj. val
         common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
         common = np.concatenate((common, np.expand_dims([np.std(state[0])], axis=1)), axis=1) #std of solution values
+        common = np.concatenate((common, np.expand_dims([np.max(state[0])], axis=1)), axis=1) #max solution val
+        common = np.concatenate((common, np.expand_dims([np.min(state[0])], axis=1)), axis=1) #min solution val
+
         common = np.concatenate((common, np.expand_dims([np.average(state[2])], axis=1)), axis=1) #avg of obj. coeffs
         common = np.concatenate((common, np.expand_dims([np.std(state[2])], axis=1)), axis=1) #std of obj. coeffs
+        common = np.concatenate((common, np.expand_dims([np.max(state[2])], axis=1)), axis=1) #max obj. coeff
+        common = np.concatenate((common, np.expand_dims([np.min(state[2])], axis=1)), axis=1) #min obj. coeff
+
+        common = np.concatenate((common, np.expand_dims([np.average(fractionality)], axis=1)), axis=1) #avg of frac
+        common = np.concatenate((common, np.expand_dims([np.std(fractionality)], axis=1)), axis=1) #std of frac
+        common = np.concatenate((common, np.expand_dims([np.max(fractionality)], axis=1)), axis=1) #max frac
+        common = np.concatenate((common, np.expand_dims([np.min(fractionality)], axis=1)), axis=1) #min frac
 
         common = np.tile(common,(input.shape[0],1))
         input = np.concatenate((input, common), axis=1)
 
+        print(input.shape)
+
         return input
-
-        #TODO:
-        #x_minus_mu = state[0] - np.average(state[0])
-        #x_minus_mu_div_std = x_minus_mu / np.std(state[0])
-
 
 
 
@@ -87,13 +107,17 @@ class StrongBranchMimic():
 
 if __name__ == '__main__':
     mimic = StrongBranchMimic([])
-    state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
+    state = ([4, -3.3, 1.1, -3.2, 4.6, 0], 5, [-3, 2, 0.4, 3.1, -2.9, 1.3])
+    #state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
 
+
+    mimic.train_net(state, best_cand)
     for i in range(100):
         mimic.train_net(state, best_cand)
 
     #new_state = ([4, 1.2, 1, -3.4, 4.1, 0], 10, [3, 2, 0.4, 1, -0.9, 1])
     new_state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
-    pred = mimic.predict(new_state)
-    print(pred)
+    for i in range(10):
+        pred = mimic.predict(new_state)
+        print(pred)
