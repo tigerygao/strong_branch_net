@@ -135,7 +135,7 @@ for r in range(run):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[run], strong_branching_limit[run], num_features[run], str(hidden_layers[run]), epochs[run]));
-    branch_times = admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
+    branch_times = "test"#admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
