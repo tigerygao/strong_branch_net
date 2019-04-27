@@ -131,12 +131,6 @@ class StrongBranchMimic():
         input = np.hstack((input, fractionalities, stats[-1]))
         for i in range(len(stats)-1):
             static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
-        '''
-        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
-        '''
 
         #objective coefficients
         obj_coeffs = np.expand_dims(np.array(state[2]), axis=1)
@@ -144,13 +138,6 @@ class StrongBranchMimic():
         input = np.hstack((input, obj_coeffs, stats[-1]))
         for i in range(len(stats)-1):
             static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
-        '''
-        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
-        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
-        '''
-        
 
         static = np.tile(static,(input.shape[0],1))
         input = np.concatenate((input, static), axis=1)
