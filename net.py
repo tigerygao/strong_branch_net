@@ -95,11 +95,16 @@ class StrongBranchMimic():
             y = [0]*num_cands
             y[bestcands[i]] = 1
             num_repeat_pos = num_cands - 2
+
+            repeats = np.tile(np.expand_dims(input[bestcands[i]], axis=0),(num_repeat_pos,1))
+            '''
             for j in range(num_repeat_pos):
                 input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
                 y.append(1)
-            inputs = np.vstack((inputs, input))
+            '''
+            inputs = np.vstack((inputs, input, repeats))
             ys = ys + y
+            #print(inputs)
 
         for e in range(self.epochs):
             print("Epoch %d" % e);
@@ -183,10 +188,10 @@ if __name__ == '__main__':
 
     mimic = StrongBranchMimic(7, [20, 20, 20, 20], 10)
 
-    state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
+    state = ([1.5, 4, 3.6, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
 
-    for i in range(100):
+    for i in range(1):
         mimic.addSample(state, best_cand)
 
     mimic.trainOnce(mimic.getTrainingData(), mimic.getTrainingLabels());
