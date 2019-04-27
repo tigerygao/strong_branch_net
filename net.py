@@ -85,7 +85,7 @@ class StrongBranchMimic():
 
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
     #def trainOnce(self, state2d, bestcand2d):
-    def trainOnce(self, data, labels):
+    def trainOnce(self, data, bestcands):
         #print("inside trainOnce");
         inputs = np.empty((0,NUM_INPUTS), float)
         ys = []
@@ -93,10 +93,10 @@ class StrongBranchMimic():
             input = self.compute_input(data[i])
             num_cands = len(state[i][0])
             y = [0]*num_cands
-            y[bestcand] = 1
+            y[bestcands[i]] = 1
             num_repeat_pos = num_cands - 2
             for i in range(num_repeat_pos):
-                input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
+                input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
                 y.append(1)
             inputs = np.vstack((inputs, input))
             ys = ys + y
