@@ -91,7 +91,7 @@ class StrongBranchMimic():
         ys = []
         for i in range(len(data)):
             input = self.compute_input(data[i])
-            num_cands = len(state[i][0])
+            num_cands = len(data[i][0])
             y = [0]*num_cands
             y[bestcands[i]] = 1
             num_repeat_pos = num_cands - 2
