@@ -15,7 +15,7 @@ def makeFileName(ds, sbl, nf, hl, e):
 
 
 # just for preallocating size of arrays, if you run more tests than this just increase this number
-n = 1000;
+n = 10;
 
 # Data files location
 dataDir = "data/";
@@ -36,7 +36,6 @@ header = "dataset,strong_branching_limit,num_features,hl1,hl2,hl3,hl4,epochs,num
 
 # Holds output filenames
 outputs = [None]*n;
-
 
 # If you want to add another test run, put it here
 
@@ -105,6 +104,26 @@ outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_featu
                     hidden_layers[run], epochs[run]);
 
 
+'''
+run = run + 1;
+dataset[run]                      = "air04.mps.gz";
+strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
+num_features[run]                 = 7; # How modify the set of features from here?
+hidden_layers[run]                = [30, 70, 70, 20];
+epochs[run]                       = 20;
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
+                    hidden_layers[run], epochs[run]);
+'''
+
+
+print(dataset);
+print(strong_branching_limit);
+print(num_features);
+print(hidden_layers);
+print(epochs);
+print(outputs);
+
+
 
 print("Doing %d test runs" % run);
 
@@ -127,26 +146,28 @@ print("Runtime: %s" % str(end-start));
 #print("Next try small sized network");
 
 
-for r in range(run):
+for r in range(run+1):
+
+    print(r);
 
     # First open file
-    op = open(resultsDir+outputs[run],"w+");
+    op = open(resultsDir+outputs[r],"w+");
 
     # Then run the solver
     start=time.clock();
-    print("%s, %d, %d, %s, %d" % (dataset[run], strong_branching_limit[run], num_features[run], str(hidden_layers[run]), epochs[run]));
-    branch_times = 1 #admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
+    print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
+    branch_times = 1 #admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
     # Then save everything 
     op.write(header);
     op.write("%s,%d,%d,%s,%d,%d,%s\n" % (\
-            dataset[run], \
-            strong_branching_limit[run], \
-            num_features[run], \
-            ','.join(str(l) for l in hidden_layers[run]), \
-            epochs[run], \
+            dataset[r], \
+            strong_branching_limit[r], \
+            num_features[r], \
+            ','.join(str(l) for l in hidden_layers[r]), \
+            epochs[r], \
             branch_times, \
             end-start));
 
