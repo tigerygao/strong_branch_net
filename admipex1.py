@@ -209,11 +209,11 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
     # How to set branching strategy: use strong branching 
     c.parameters.mip.strategy.variableselect.set(3) # See table in this link for options https://www.ibm.com/support/knowledgecenter/es/SSSA5P_12.6.0/ilog.odms.cplex.help/CPLEX/Parameters/topics/VarSel.html
 
-    print("\n\n**************** Before running .solve() ****************\n\n")
+    #print("\n\n**************** Before running .solve() ****************\n\n")
 
     c.solve()
 
-    print("\n\n**************** After running .solve() ****************\n\n")
+    #print("\n\n**************** After running .solve() ****************\n\n")
 
     solution = c.solution
 
@@ -237,11 +237,19 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
             print("Column %d: Value = %17.10g" % (j, x[j]))
     '''
 
+    
+    print("\n\n**************** important values ****************\n\n")
+
     print("Solve callback was called ", solve_instance.times_called, "times")
     print("Branch callback was called ", branch_instance.times_called, "times")
     print("Node callback was called ", node_instance.times_called, "times")
 
+    #print("\n\n**************** end important values ****************\n\n")
+
+
+
     return branch_instance.times_called;
+
 
 
 if __name__ == "__main__":
