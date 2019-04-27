@@ -8,7 +8,7 @@ def makeFileName(ds, sbl, nf, hl, e):
     return datetime.today().strftime('%Y-%M-%D_%H-%M-%S_') \
                     + ds + "_" \
                     + str(sbl) + "_" \
-                    + nf + "_" \
+                    + str(nf) + "_" \
                     + "[" + ','.join(str(l) for l in hl) + "]_" \
                     + str(e) \
                     + ".csv";
@@ -18,7 +18,10 @@ def makeFileName(ds, sbl, nf, hl, e):
 n = 1000;
 
 # Data files location
-dataloc = "data/";
+dataDir = "data/";
+
+# Results destination
+resultsDir = "results/";
 
 # List of things we can change in test runs
 dataset                         = [None]*n;
@@ -43,7 +46,7 @@ strong_branching_limit[run]       = 10000000; # Set very high to be 100% (full?)
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 '''
 outputs[run] = datetime.today().strftime('%Y-%M-%D_%H-%M-%S_') \
@@ -61,7 +64,7 @@ strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) stron
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
 '''
@@ -71,7 +74,7 @@ strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) stron
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
 run = run + 1;
@@ -80,7 +83,7 @@ strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) stron
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
 run = run + 1;
@@ -89,7 +92,7 @@ strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) stron
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
 run = run + 1;
@@ -98,7 +101,7 @@ strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) stron
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
 epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], string_branching_limit[run], num_features[run] \
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 '''
 
@@ -121,31 +124,33 @@ end = time.clock();
 print("Runtime: %s" % str(end-start));
 '''
 
-print("Next try small sized network");
+#print("Next try small sized network");
 
 
 for r in range(run):
 
     # First open file
-    op = open(output[run],"w+");
+    op = open(resultsDir+outputs[run],"w+");
 
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[run], strong_branching_limit[run], num_features[run], str(hidden_layers[run]), epochs[run]));
-    admipex1(dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
+    branch_times = admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
     # Then save everything 
     op.write(header);
-    op.write("%s,%d,%d,%s,%d,%f,%f\n" % dataset, strong_branching_limit, num_features, \
-                        ','.join(str(l) for l in hidden_layers[run]), epochs\n);
+    op.write("%s,%d,%d,%s,%d,%f,%f,%d,%s\n" % dataset[run], strong_branching_limit[run], num_features[run], \
+                        ','.join(str(l) for l in hidden_layers[run]), epochs[run], branch_times, str(end-start));
+
+    #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
+    # what about units for clock timing?
+    op.close();
+    
 
 
-
-
-
-
+'''
 dataset = "data/air04.mps.gz";
 #dataset = "data/sentoy.mps";
 strong_branching_limit = 45; # Set very high to be 100% (full?) strong branching
@@ -159,7 +164,7 @@ print("%s, %d, %d, %s, %d" % (dataset, strong_branching_limit, num_features, str
 admipex1(dataset, strong_branching_limit, num_features, hidden_layers, epochs);
 end = time.clock();
 print("Runtime: %s" % str(end-start));
-
+'''
 
 
 

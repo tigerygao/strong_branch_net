@@ -241,6 +241,8 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
     print("Branch callback was called ", branch_instance.times_called, "times")
     print("Node callback was called ", node_instance.times_called, "times")
 
+    return branch_instance.times_called;
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
