@@ -40,7 +40,7 @@ class StrongBranchMimic():
         self.net.to(self.device);
 
         self.criterion = torch.nn.BCELoss()
-        self.optimizer = torch.optim.Adam(self.net.parameters())
+        self.optimizer = torch.optim.Adam(self.net.parameters(), lr=0.1)
         self.epochs = epochs;
         self.trainingData = [];
         self.trainingLabels = [];
@@ -86,18 +86,22 @@ class StrongBranchMimic():
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
     #def trainOnce(self, state2d, bestcand2d):
     def trainOnce(self, data, bestcands):
-        #print("inside trainOnce");
+        print("inside trainOnce");
         inputs = np.empty((0,self.NUM_INPUTS), float)
         ys = []
         for i in range(len(data)):
+            print("before compute_input ");
             input = self.compute_input(data[i])
+            print("after compute_input");
             num_cands = len(data[i][0])
             y = [0]*num_cands
             y[bestcands[i]] = 1
             num_repeat_pos = num_cands - 2
+            print("before inner inner loop");
             for j in range(num_repeat_pos):
                 input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
                 y.append(1)
+            print("before inner inner loop");
             inputs = np.vstack((inputs, input))
             ys = ys + y
 
