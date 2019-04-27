@@ -82,15 +82,49 @@ class StrongBranchMimic():
         self.optimizer.step()
 
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
-    def trainOnce(self, state2d, bestcand2d):
+    #def trainOnce(self, state2d, bestcand2d):
+    def trainOnce(self, state, bestcand):
         #print("inside trainOnce");
         for e in range(self.epochs):
             print("Epoch %d" % e);
+            '''
             for i in range(len(state2d)): # Maybe randomize this instead of doing it in the same order? TODO
                 state = state2d[i];
                 bestcand = bestcand2d[i]
                 #print("before self.train");
                 self.train(state, bestcand);
+            '''
+            # Need to give all tensors at once for GPU efficiency!!!
+            
+            num_cands = len(state[0])
+            #print("Made it to 1");
+            input = self.compute_input(state)
+            #print("Made it to 2");
+            y = [0]*num_cands
+            #print("Made it to 3");
+            y[bestcand] = 1
+            #print("Made it to 4");
+            num_repeat_pos = num_cands - 2
+            #print("Made it to train loop");
+            for i in range(num_repeat_pos):
+                input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
+                y.append(1)
+
+            y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
+            input = Variable(torch.from_numpy(input).float())
+
+            #print("Sending to GPU");
+            y = y.to(self.device);
+            input = input.to(self.device);
+
+            y_hat = self.net(input)
+            loss = self.criterion(y_hat, y)
+            self.optimizer.zero_grad()
+            loss.backward()
+            self.optimizer.step()
+                
+            
+            
 
     def getTrainingData(self):
         return self.trainingData;
