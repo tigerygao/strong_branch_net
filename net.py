@@ -90,19 +90,15 @@ class StrongBranchMimic():
         inputs = np.empty((0,self.NUM_INPUTS), float)
         ys = []
         for i in range(len(data)):
-            print("1")
             input = self.compute_input(data[i])
-            print("2")
             num_cands = len(data[i][0])
-            print("3")
             y = [0]*num_cands
-            print("4")
             y[bestcands[i]] = 1
-            print("5")
             num_repeat_pos = num_cands - 2
+            print(bestcands[i])
+            print(input.shape)
             for i in range(num_repeat_pos):
                 input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
-                print("6")
                 y.append(1)
             inputs = np.vstack((inputs, input))
             ys = ys + y
