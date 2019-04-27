@@ -35,8 +35,8 @@ class StrongBranchMimic():
         self.net = StrongBranchNet(num_inputs)
         #self.net.cuda(); # Sad!
 
-        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.device = torch.device("cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cpu")
         self.net.to(self.device);
 
         self.criterion = torch.nn.BCELoss()
@@ -90,20 +90,25 @@ class StrongBranchMimic():
         inputs = np.empty((0,self.NUM_INPUTS), float)
         ys = []
         for i in range(len(data)):
-            print("before compute_input ");
+            print("%d of %d" % (i, len(data)));
             input = self.compute_input(data[i])
-            print("after compute_input");
+            #print("after compute_input");
             num_cands = len(data[i][0])
             y = [0]*num_cands
             y[bestcands[i]] = 1
             num_repeat_pos = num_cands - 2
-            print("before inner inner loop");
+
+            #print("before inner inner loop");
+            repeats = np.tile(np.expand_dims(input[bestcands[i]], axis=0),(num_repeat_pos,1))
+            '''
             for j in range(num_repeat_pos):
                 input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
                 y.append(1)
-            print("before inner inner loop");
-            inputs = np.vstack((inputs, input))
+            '''
+            inputs = np.vstack((inputs, input, repeats))
+            #print("before inner inner loop");
             ys = ys + y
+            #print(inputs)
 
         for e in range(self.epochs):
             print("Epoch %d" % e);
@@ -119,13 +124,21 @@ class StrongBranchMimic():
             y = Variable(torch.from_numpy(np.expand_dims(np.array(ys), axis=1)).float())
             input = Variable(torch.from_numpy(inputs).float())
 
+            print("checkpoint 1");
+
             #print("Sending to GPU");
             y = y.to(self.device);
             input = input.to(self.device);
 
+            print("checkpoint 2");
+
             y_hat = self.net(input)
+            print("checkpoint 3");
             loss = self.criterion(y_hat, y)
+            print("checkpoint 4");
             self.optimizer.zero_grad()
+            print("checkpoint 5");
+
             loss.backward()
             self.optimizer.step()
 
@@ -187,10 +200,10 @@ if __name__ == '__main__':
 
     mimic = StrongBranchMimic(7, [20, 20, 20, 20], 10)
 
-    state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
+    state = ([1.5, 4, 3.6, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
 
-    for i in range(100):
+    for i in range(1):
         mimic.addSample(state, best_cand)
 
     mimic.trainOnce(mimic.getTrainingData(), mimic.getTrainingLabels());

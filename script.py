@@ -40,7 +40,8 @@ ds = "app1-2.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 1446; # For app1-2.mps.gz
+#sbl = 1446; # For app1-2.mps.gz
+sbl = 100; # For app1-2.mps.gz
 #sbl=45;
 
 # SBL if you want all of them to be same (None if you dont);
