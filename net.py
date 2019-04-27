@@ -31,6 +31,7 @@ class StrongBranchNet(torch.nn.Module):
 class StrongBranchMimic():
     def __init__(self, num_inputs, hidden_nodes, epochs, hyperparams=[], options=[]):
         #self.net = StrongBranchNet(num_inputs, hidden_nodes)
+        NUM_INPUTS = num_inputs
         self.net = StrongBranchNet(num_inputs)
         self.net.cuda(); # Sad!
 
@@ -48,6 +49,7 @@ class StrongBranchMimic():
         #print("Inside add Sample");
         #self.trainingData = [self.trainingData, state];
         #self.trainingLabels = [self.trainingLabels, bestcand];
+
         self.trainingData.append(state);
         self.trainingLabels.append(bestcand);
 
@@ -83,8 +85,22 @@ class StrongBranchMimic():
 
     #def trainOnce(self, state2d=trainingData, bestcand2d=trainingLabels): Can't do this, so adding getter functions
     #def trainOnce(self, state2d, bestcand2d):
-    def trainOnce(self, state, bestcand):
+    def trainOnce(self, data, labels):
         #print("inside trainOnce");
+        inputs = np.empty((0,NUM_INPUTS), float)
+        ys = []
+        for i in len(data):
+            input = self.compute_input(data[i])
+            num_cands = len(state[i][0])
+            y = [0]*num_cands
+            y[bestcand] = 1
+            num_repeat_pos = num_cands - 2
+            for i in range(num_repeat_pos):
+                input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
+                y.append(1)
+            inputs = np.vstack((inputs, input))
+            ys = ys + y
+
         for e in range(self.epochs):
             print("Epoch %d" % e);
             '''
@@ -95,23 +111,9 @@ class StrongBranchMimic():
                 self.train(state, bestcand);
             '''
             # Need to give all tensors at once for GPU efficiency!!!
-            
-            num_cands = len(state[0])
-            #print("Made it to 1");
-            input = self.compute_input(state)
-            #print("Made it to 2");
-            y = [0]*num_cands
-            #print("Made it to 3");
-            y[bestcand] = 1
-            #print("Made it to 4");
-            num_repeat_pos = num_cands - 2
-            #print("Made it to train loop");
-            for i in range(num_repeat_pos):
-                input = np.concatenate((input, np.expand_dims(input[bestcand], axis=0)), axis=0)
-                y.append(1)
 
-            y = Variable(torch.from_numpy(np.expand_dims(np.array(y), axis=1)).float())
-            input = Variable(torch.from_numpy(input).float())
+            y = Variable(torch.from_numpy(np.expand_dims(np.array(ys), axis=1)).float())
+            input = Variable(torch.from_numpy(inputs).float())
 
             #print("Sending to GPU");
             y = y.to(self.device);
@@ -122,9 +124,9 @@ class StrongBranchMimic():
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
-                
-            
-            
+
+
+
 
     def getTrainingData(self):
         return self.trainingData;
