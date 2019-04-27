@@ -33,7 +33,7 @@ class StrongBranchMimic():
         #self.net = StrongBranchNet(num_inputs, hidden_nodes)
         self.NUM_INPUTS = num_inputs
         self.net = StrongBranchNet(num_inputs)
-        self.net.cuda(); # Sad!
+        #self.net.cuda(); # Sad!
 
         #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.device = torch.device("cpu")
@@ -186,12 +186,15 @@ class StrongBranchMimic():
 if __name__ == '__main__':
     torch.manual_seed(0);
 
-    mimic = StrongBranchMimic([])
+    mimic = StrongBranchMimic(7, [20, 20, 20, 20], 10)
+
     state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
 
     for i in range(100):
-        mimic.train_net(state, best_cand)
+        mimic.addSample(state, best_cand)
+
+    mimic.trainOnce(mimic.getTrainingData(), mimic.getTrainingLabels());
 
     #new_state = ([4, 1.2, 1, -3.4, 4.1, 0], 10, [3, 2, 0.4, 1, -0.9, 1])
     new_state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
