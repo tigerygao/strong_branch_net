@@ -135,14 +135,31 @@ for r in range(run):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[run], strong_branching_limit[run], num_features[run], str(hidden_layers[run]), epochs[run]));
-    branch_times = "test"#admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
+    branch_times = 1 #admipex1(dataDir+dataset[run], strong_branching_limit[run], num_features[run], hidden_layers[run], epochs[run]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
     # Then save everything 
     op.write(header);
-    op.write("%s,%d,%d,%s,%d,%d,%s\n" % dataset[run], strong_branching_limit[run], num_features[run], \
-                        ','.join(str(l) for l in hidden_layers[run]), epochs[run], branch_times, str(end-start));
+    op.write("%s,%d,%d,%s,%d,%d,%s\n" % (\
+            dataset[run], \
+            strong_branching_limit[run], \
+            num_features[run], \
+            ','.join(str(l) for l in hidden_layers[run]), \
+            epochs[run], \
+            branch_times, \
+            end-start));
+
+    '''
+    op.write(dataset[run] + ',');
+    op.write(str(strong_branching_limit[run]) + ',');
+    op.write(str(num_features[run]) + ',');
+    op.write(str(','.join(str(l) for l in hidden_layers[run])[run]) + ',');
+    op.write(str(epochs[run]) + ',');
+    op.write([run] + ',');
+    op.write([run] + ',');
+    '''
+
 
     #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
     # what about units for clock timing?
