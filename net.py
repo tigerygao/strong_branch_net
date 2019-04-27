@@ -89,7 +89,7 @@ class StrongBranchMimic():
         #print("inside trainOnce");
         inputs = np.empty((0,self.NUM_INPUTS), float)
         ys = []
-        for i in len(data):
+        for i in range(len(data)):
             input = self.compute_input(data[i])
             num_cands = len(state[i][0])
             y = [0]*num_cands
