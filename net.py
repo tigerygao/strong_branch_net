@@ -31,7 +31,7 @@ class StrongBranchNet(torch.nn.Module):
 class StrongBranchMimic():
     def __init__(self, num_inputs, hidden_nodes, epochs, hyperparams=[], options=[]):
         #self.net = StrongBranchNet(num_inputs, hidden_nodes)
-        NUM_INPUTS = num_inputs
+        self.NUM_INPUTS = num_inputs
         self.net = StrongBranchNet(num_inputs)
         self.net.cuda(); # Sad!
 
@@ -87,7 +87,7 @@ class StrongBranchMimic():
     #def trainOnce(self, state2d, bestcand2d):
     def trainOnce(self, data, bestcands):
         #print("inside trainOnce");
-        inputs = np.empty((0,NUM_INPUTS), float)
+        inputs = np.empty((0,self.NUM_INPUTS), float)
         ys = []
         for i in len(data):
             input = self.compute_input(data[i])
