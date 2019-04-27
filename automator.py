@@ -141,7 +141,7 @@ for r in range(run):
     
     # Then save everything 
     op.write(header);
-    op.write("%s,%d,%d,%s,%d,%f,%f,%d,%s\n" % dataset[run], strong_branching_limit[run], num_features[run], \
+    op.write("%s,%d,%d,%s,%d,%d,%s\n" % dataset[run], strong_branching_limit[run], num_features[run], \
                         ','.join(str(l) for l in hidden_layers[run]), epochs[run], branch_times, str(end-start));
 
     #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
