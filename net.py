@@ -72,25 +72,26 @@ class StrongBranchMimic():
 
         ##STATIC FEATURES##
         common = np.expand_dims(np.array([state[1]]), axis=1) #obj. val
+
         common = np.concatenate((common, np.expand_dims([np.average(state[0])], axis=1)), axis=1) #avg of solution values
         common = np.concatenate((common, np.expand_dims([np.std(state[0])], axis=1)), axis=1) #std of solution values
         common = np.concatenate((common, np.expand_dims([np.max(state[0])], axis=1)), axis=1) #max solution val
         common = np.concatenate((common, np.expand_dims([np.min(state[0])], axis=1)), axis=1) #min solution val
-
-        common = np.concatenate((common, np.expand_dims([np.average(state[2])], axis=1)), axis=1) #avg of obj. coeffs
-        common = np.concatenate((common, np.expand_dims([np.std(state[2])], axis=1)), axis=1) #std of obj. coeffs
-        common = np.concatenate((common, np.expand_dims([np.max(state[2])], axis=1)), axis=1) #max obj. coeff
-        common = np.concatenate((common, np.expand_dims([np.min(state[2])], axis=1)), axis=1) #min obj. coeff
 
         common = np.concatenate((common, np.expand_dims([np.average(fractionality)], axis=1)), axis=1) #avg of frac
         common = np.concatenate((common, np.expand_dims([np.std(fractionality)], axis=1)), axis=1) #std of frac
         common = np.concatenate((common, np.expand_dims([np.max(fractionality)], axis=1)), axis=1) #max frac
         common = np.concatenate((common, np.expand_dims([np.min(fractionality)], axis=1)), axis=1) #min frac
 
+        common = np.concatenate((common, np.expand_dims([np.average(state[2])], axis=1)), axis=1) #avg of obj. coeffs
+        common = np.concatenate((common, np.expand_dims([np.std(state[2])], axis=1)), axis=1) #std of obj. coeffs
+        common = np.concatenate((common, np.expand_dims([np.max(state[2])], axis=1)), axis=1) #max obj. coeff
+        common = np.concatenate((common, np.expand_dims([np.min(state[2])], axis=1)), axis=1) #min obj. coeff
+
+
         common = np.tile(common,(input.shape[0],1))
         input = np.concatenate((input, common), axis=1)
 
-        print(input.shape)
 
         return input
 
@@ -104,6 +105,67 @@ class StrongBranchMimic():
 
 
 
+    def compute_input_automated(self, state):
+        #state[0]: solution vector
+        #state[1]: objective value
+        #state[2]: objective coefficient vector
+
+        static = np.expand_dims(np.array([state[1]]), axis=1)
+
+        #solution values
+        input = np.expand_dims(np.array(state[0]), axis=1)
+        stats = self.compute_stats(input)
+        input = np.hstack((input, stats[-1]))
+        for i in range(len(stats)-1):
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+        '''
+        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
+        '''
+
+        #solution fractionalities
+        fractionalities = np.expand_dims(np.absolute((input[:,0] - np.floor(input[:,0])) - 0.5), axis=1)
+        stats = self.compute_stats(fractionalities)
+        input = np.hstack((input, fractionalities, stats[-1]))
+        for i in range(len(stats)-1):
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+        '''
+        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
+        '''
+
+        #objective coefficients
+        obj_coeffs = np.expand_dims(np.array(state[2]), axis=1)
+        stats = self.compute_stats(obj_coeffs)
+        input = np.hstack((input, obj_coeffs, stats[-1]))
+        for i in range(len(stats)-1):
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+        '''
+        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
+        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
+        '''
+        
+
+        static = np.tile(static,(input.shape[0],1))
+        input = np.concatenate((input, static), axis=1)
+        return input
+
+
+    def compute_stats(self, arr):
+        mean = np.average(arr)
+        std = np.std(arr)
+        max = np.max(arr)
+        min = np.min(arr)
+        normalized = (arr - mean)/std
+        return (mean, std, max, min, normalized)
+
+
 
 if __name__ == '__main__':
     mimic = StrongBranchMimic([])
@@ -111,13 +173,17 @@ if __name__ == '__main__':
     #state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
     best_cand = 2
 
+    np.set_printoptions(suppress=True)
+    print(mimic.compute_input(state))
+    print(mimic.compute_input_automated(state))
+    print(mimic.compute_input(state) == mimic.compute_input_automated(state))
 
-    mimic.train_net(state, best_cand)
-    for i in range(100):
-        mimic.train_net(state, best_cand)
+    #mimic.train_net(state, best_cand)
+    #for i in range(100):
+    #    mimic.train_net(state, best_cand)
 
     #new_state = ([4, 1.2, 1, -3.4, 4.1, 0], 10, [3, 2, 0.4, 1, -0.9, 1])
     new_state = ([1.5, 4, 3, -2, 4.3, -2.1], 10, [2, 3, 0.4, 1.1, -0.9, 1])
-    for i in range(10):
-        pred = mimic.predict(new_state)
-        print(pred)
+    #for i in range(10):
+    #    pred = mimic.predict(new_state)
+    #    print(pred)
