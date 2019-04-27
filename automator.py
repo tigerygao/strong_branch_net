@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def makeFileName(ds, sbl, nf, hl, e):
-    return datetime.today().strftime('%Y-%M-%D_%H-%M-%S_') \
+    return datetime.today().strftime('%Y-%m-%d_%H-%M-%S_') \
                     + ds + "_" \
                     + str(sbl) + "_" \
                     + str(nf) + "_" \
@@ -63,25 +63,16 @@ dataset[run]                      = "air04.mps.gz";
 strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [10, 20, 20, 10];
-epochs[run]                       = 5;
+epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
-'''
-run = run + 1;
-dataset[run]                      = "air04.mps.gz";
-strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
-num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
-epochs[run]                       = 5;
-outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
-                    hidden_layers[run], epochs[run]);
 
 run = run + 1;
 dataset[run]                      = "air04.mps.gz";
 strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
+hidden_layers[run]                = [10, 10, 10, 10];
 epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -90,7 +81,16 @@ run = run + 1;
 dataset[run]                      = "air04.mps.gz";
 strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
+hidden_layers[run]                = [10, 10, 10, 10];
+epochs[run]                       = 20;
+outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
+                    hidden_layers[run], epochs[run]);
+
+run = run + 1;
+dataset[run]                      = "air04.mps.gz";
+strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
+num_features[run]                 = 7; # How modify the set of features from here?
+hidden_layers[run]                = [30, 70, 70, 20];
 epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -99,11 +99,11 @@ run = run + 1;
 dataset[run]                      = "air04.mps.gz";
 strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
-epochs[run]                       = 5;
+hidden_layers[run]                = [30, 70, 70, 20];
+epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
-'''
+
 
 
 print("Doing %d test runs" % run);

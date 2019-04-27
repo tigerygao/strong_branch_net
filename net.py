@@ -34,8 +34,8 @@ class StrongBranchMimic():
         self.net = StrongBranchNet(num_inputs)
         self.net.cuda(); # Sad!
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        #self.device = torch.device("cpu")
+        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cpu")
         self.net.to(self.device);
 
         self.criterion = torch.nn.BCELoss()
