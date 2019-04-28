@@ -43,7 +43,7 @@ ds = "n4-3.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 360;
+sbl = 490;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
