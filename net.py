@@ -97,6 +97,8 @@ class StrongBranchMimic():
             num_repeat_pos = num_cands - 2
 
             repeats = np.tile(np.expand_dims(input[bestcands[i]], axis=0),(num_repeat_pos,1))
+            rep_y = [1]*num_repeat_pos
+            y = y + rep_y
             '''
             for j in range(num_repeat_pos):
                 input = np.concatenate((input, np.expand_dims(input[bestcands[i]], axis=0)), axis=0)
