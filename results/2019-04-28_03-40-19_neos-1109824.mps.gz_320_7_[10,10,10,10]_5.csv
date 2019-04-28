@@ -1,0 +1,23 @@
+dataset,strong_branching_limit,num_features,hl1,hl2,hl3,hl4,epochs,num_branch_callbacks,runtime
+neos-1109824.mps.gz,320,7,10,10,10,10,5,327,77.028724
+
+solution status,objective value
+MIP_optimal,378.0
+
+branch iter,predicted var
+320,62
+321,47
+322,18
+323,18
+324,18
+325,18
+326,18
+327,18
+320,62
+321,47
+322,18
+323,18
+324,18
+325,18
+326,18
+327,18
