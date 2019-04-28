@@ -14,6 +14,15 @@ def makeFileName(ds, sbl, nf, hl, e):
                     + ".csv";
 
 
+def pushToGit(filename):
+    subprocess.call(["git", "add", "."]);
+    print("Added");
+    subprocess.call(["git", "commit", "-m", "AUTOMATED COMMIT: " + filename]);
+    print("Commited");
+    subprocess.call(["git", "push"]);
+    print("Pushed!");
+
+
 # just for preallocating size of arrays, if you run more tests than this just increase this number
 n = 15;
 
@@ -26,13 +35,14 @@ resultsDir = "results/";
 
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
-#ds = "app1-2.mps.gz";
-ds = "air04.mps.gz";
+ds = "app1-2.mps.gz";
+#ds = "air04.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
 #sbl = 1446; # For app1-2.mps.gz
-sbl=45;
+sbl = 100; # For app1-2.mps.gz
+#sbl=45;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
@@ -217,7 +227,12 @@ for r in range(run+1):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
-    branch_times = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
+    branch_times = admipex1(dataDir+dataset[r], \
+                    strong_branching_limit[r], \
+                    num_features[r], \
+                    hidden_layers[r], \
+                    epochs[r]);
+    
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
@@ -250,6 +265,10 @@ for r in range(run+1):
     #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
     # what about units for clock timing?
     op.close();
+
+    # Push to git!! 
+    pushToGit(outputs[r]);
+
     
 
 
