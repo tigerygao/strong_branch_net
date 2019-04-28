@@ -43,7 +43,7 @@ ds = "cov1075.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 100;
+sbl = 50;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;

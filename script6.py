@@ -43,7 +43,7 @@ ds = "bienst2.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 320;
+sbl = 160;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
