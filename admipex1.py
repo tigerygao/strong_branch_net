@@ -233,10 +233,10 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
 
 
     # solution.get_status() returns an integer code
-    print("Solution status = ", solution.get_status(), ":", end=' ')
+    #print("Solution status = ", solution.get_status(), ":", end=' ')
     # the following line prints the corresponding string
-    print(solution.status[solution.get_status()])
-    print("Objective value = ", solution.get_objective_value())
+    #print(solution.status[solution.get_status()])
+    #print("Objective value = ", solution.get_objective_value())
     print()
     '''
     x = solution.get_values(0, c.variables.get_num() - 1)
@@ -248,6 +248,10 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
     
     print("\n\n**************** important values ****************\n\n")
 
+    print("Solution status = ", solution.get_status(), ":", end=' ')
+    print("Objective value = ", solution.get_objective_value())
+    print(solution.status[solution.get_status()])
+    print()
     print("Solve callback was called ", solve_instance.times_called, "times")
     print("Branch callback was called ", branch_instance.times_called, "times")
     print("Node callback was called ", node_instance.times_called, "times")
@@ -256,7 +260,7 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
 
 
 
-    return (branch_instance.times_called, saved_predicts);
+    return (branch_instance.times_called, saved_predicts, solution.status[solution.get_status()], solution.get_objective_value());
 
 
 

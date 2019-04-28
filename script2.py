@@ -38,11 +38,12 @@ gpu = 0
 
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
-ds = "cov1075.mps.gz";
+ds = "air04.mps.gz"; # For testing purposes, (make sure to set sbl to <12)
+#ds = "cov1075.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 100;
+sbl = 10;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
@@ -233,7 +234,7 @@ for r in range(run+1):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
-    (branch_times, predicts) = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
+    (branch_times, predicts, sol_type, sol_obj_val) = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
@@ -252,7 +253,13 @@ for r in range(run+1):
             branch_times, \
             end-start));
 
-    op.write("\n"
+    op.write("\nsolution status,objective value\n%s,%s\n" % (sol_type, sol_obj_val));
+
+    op.write("\nbranch iter,predicted var\n");
+    for i in range(len(predicts)):
+        # REMEMBER ONCE THIS WORKS UNCOMMENT AUTO GIT PUSHING
+        op.write(str(predicts[i][0]) + ',' + str(predicts[i][1]) + "\n");
+    
 
     '''
     op.write(dataset[run] + ',');
@@ -271,7 +278,7 @@ for r in range(run+1):
     
 
     # Push to git! 
-    pushToGit(outputs[r]);
+    #pushToGit(outputs[r]);
 
 
 '''
