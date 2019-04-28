@@ -39,7 +39,7 @@ gpu = 0
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
 #ds = "air04.mps.gz"; # For testing purposes, (make sure to set sbl to <12)
-ds = "neos-1109824.mps.gz";
+ds = "bienst2.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
