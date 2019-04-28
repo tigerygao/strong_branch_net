@@ -33,14 +33,16 @@ dataDir = "data/";
 # Results destination
 resultsDir = "results/";
 
+# GPU? 0 or 1
+gpu = 0
 
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
-ds = "app1-2.mps.gz";
+ds = "cov1075.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 1446;
+sbl = 100;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
@@ -231,7 +233,7 @@ for r in range(run+1):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
-    branch_times = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
+    (branch_times, predicts) = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
@@ -250,6 +252,8 @@ for r in range(run+1):
             branch_times, \
             end-start));
 
+    op.write("\n"
+
     '''
     op.write(dataset[run] + ',');
     op.write(str(strong_branching_limit[run]) + ',');
@@ -265,6 +269,9 @@ for r in range(run+1):
     # what about units for clock timing?
     op.close();
     
+
+    # Push to git! 
+    pushToGit(outputs[r]);
 
 
 '''

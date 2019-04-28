@@ -29,13 +29,13 @@ class StrongBranchNet(torch.nn.Module):
 
 
 class StrongBranchMimic():
-    def __init__(self, num_inputs, hidden_nodes, epochs, hyperparams=[], options=[]):
+    def __init__(self, num_inputs, hidden_nodes, epochs, gpu, hyperparams=[], options=[]):
         #self.net = StrongBranchNet(num_inputs, hidden_nodes)
         self.net = StrongBranchNet(num_inputs)
         self.net.cuda(); # Sad!
 
-        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.device = torch.device("cpu")
+        self.device = torch.device("cuda:"+str(gpu) if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cpu")
         self.net.to(self.device);
 
         self.criterion = torch.nn.BCELoss()
