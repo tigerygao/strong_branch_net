@@ -2,7 +2,7 @@
 from admipex1 import admipex1
 import time
 from datetime import datetime
-
+import subprocess
 
 def makeFileName(ds, sbl, nf, hl, e):
     return datetime.today().strftime('%Y-%m-%d_%H-%M-%S_') \
@@ -43,7 +43,7 @@ ds = "cov1075.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 100;
+sbl = 360;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
