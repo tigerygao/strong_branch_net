@@ -43,7 +43,7 @@ ds = "neos-1109824.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 360;
+sbl = 320;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
