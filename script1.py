@@ -24,17 +24,8 @@ def pushToGit(filename):
 
 
 
-def pushToGit(filename):
-    subprocess.call(["git", "add", "."]);
-    print("Added");
-    subprocess.call(["git", "commit", "-m", "AUTOMATED COMMIT: " + filename]);
-    print("Commited");
-    subprocess.call(["git", "push"]);
-    print("Pushed!");
-
-
 # just for preallocating size of arrays, if you run more tests than this just increase this number
-n = 15;
+n = 1000;
 
 # Data files location
 dataDir = "data/";
@@ -46,13 +37,10 @@ resultsDir = "results/";
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
 ds = "app1-2.mps.gz";
-#ds = "air04.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-#sbl = 1446; # For app1-2.mps.gz
-sbl = 100; # For app1-2.mps.gz
-#sbl=45;
+sbl = 100;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
@@ -75,8 +63,6 @@ outputs = [None]*n;
 # If you want to add another test run, put it here
 
 run = 0;
-
-'''
 #dataset[run]                      = "app1-2.mps.gz";
 strong_branching_limit[run]       = 10000000; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
@@ -85,8 +71,16 @@ epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 '''
+outputs[run] = datetime.today().strftime('%Y-%M-%D_%H-%M-%S_') \
+                    + dataset[run] + "_" \
+                    + str(strong_branching_limit[run]) + "_" \
+                    + num_features[run] + "_" \
+                    + "[" + ','.join(str(l) for l in hidden_layers[run]) + "]_" \
+                    + str(epochs[run]) \
+                    + ".csv";
+'''
 
-#run = run + 1;
+run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #dataset[run]                      = "app1-2.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
@@ -196,14 +190,14 @@ outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_featu
                     hidden_layers[run], epochs[run]);
 '''
 
-
-#print(dataset);
-#print(strong_branching_limit);
-#print(num_features);
-#print(hidden_layers);
-#print(epochs);
+'''
+print(dataset);
+print(strong_branching_limit);
+print(num_features);
+print(hidden_layers);
+print(epochs);
 print(outputs);
-
+'''
 
 
 print("Doing %d test runs" % run);
@@ -237,12 +231,7 @@ for r in range(run+1):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
-    branch_times = admipex1(dataDir+dataset[r], \
-                    strong_branching_limit[r], \
-                    num_features[r], \
-                    hidden_layers[r], \
-                    epochs[r]);
-    
+    branch_times = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
@@ -275,10 +264,6 @@ for r in range(run+1):
     #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
     # what about units for clock timing?
     op.close();
-
-    # Push to git!! 
-    pushToGit(outputs[r]);
-
     
 
 

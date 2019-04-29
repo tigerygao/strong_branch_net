@@ -2,7 +2,7 @@
 from admipex1 import admipex1
 import time
 from datetime import datetime
-
+import subprocess
 
 def makeFileName(ds, sbl, nf, hl, e):
     return datetime.today().strftime('%Y-%m-%d_%H-%M-%S_') \
@@ -24,17 +24,8 @@ def pushToGit(filename):
 
 
 
-def pushToGit(filename):
-    subprocess.call(["git", "add", "."]);
-    print("Added");
-    subprocess.call(["git", "commit", "-m", "AUTOMATED COMMIT: " + filename]);
-    print("Commited");
-    subprocess.call(["git", "push"]);
-    print("Pushed!");
-
-
 # just for preallocating size of arrays, if you run more tests than this just increase this number
-n = 15;
+n = 1000;
 
 # Data files location
 dataDir = "data/";
@@ -42,17 +33,17 @@ dataDir = "data/";
 # Results destination
 resultsDir = "results/";
 
+# GPU? 0 or 1
+gpu = 0
 
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
-ds = "app1-2.mps.gz";
-#ds = "air04.mps.gz";
+#ds = "air04.mps.gz"; # For testing purposes, (make sure to set sbl to <12)
+ds = "cov1075.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-#sbl = 1446; # For app1-2.mps.gz
-sbl = 100; # For app1-2.mps.gz
-#sbl=45;
+sbl = 50;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
@@ -75,23 +66,29 @@ outputs = [None]*n;
 # If you want to add another test run, put it here
 
 run = 0;
-
-'''
 #dataset[run]                      = "app1-2.mps.gz";
 strong_branching_limit[run]       = 10000000; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
+hidden_layers[run]                = [15, 30, 30, 15];
 epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 '''
+outputs[run] = datetime.today().strftime('%Y-%M-%D_%H-%M-%S_') \
+                    + dataset[run] + "_" \
+                    + str(strong_branching_limit[run]) + "_" \
+                    + num_features[run] + "_" \
+                    + "[" + ','.join(str(l) for l in hidden_layers[run]) + "]_" \
+                    + str(epochs[run]) \
+                    + ".csv";
+'''
 
-#run = run + 1;
+run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #dataset[run]                      = "app1-2.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 20, 20, 10];
+hidden_layers[run]                = [15, 30, 30, 15];
 epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -102,7 +99,7 @@ run = run + 1;
 #dataset[run]                      = "app1-2.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 10, 10, 10];
+hidden_layers[run]                = [30, 100, 100, 30];
 epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -111,7 +108,7 @@ run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [10, 10, 10, 10];
+hidden_layers[run]                = [30, 100, 100, 30];
 epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -120,7 +117,7 @@ run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [30, 70, 70, 20];
+hidden_layers[run]                = [7, 10, 10, 7];
 epochs[run]                       = 5;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -129,7 +126,7 @@ run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [30, 70, 70, 20];
+hidden_layers[run]                = [7, 10, 10, 7];
 epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -139,7 +136,7 @@ run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [30, 70, 70, 20];
+hidden_layers[run]                = [7, 7, 7, 7];
 epochs[run]                       = 20;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
@@ -149,8 +146,8 @@ run = run + 1;
 #dataset[run]                      = "air04.mps.gz";
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
-hidden_layers[run]                = [30, 70, 70, 20];
-epochs[run]                       = 20;
+hidden_layers[run]                = [7, 7, 7, 7];
+epochs[run]                       = 30;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
@@ -160,7 +157,7 @@ run = run + 1;
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [30, 70, 70, 20];
-epochs[run]                       = 20;
+epochs[run]                       = 30;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
@@ -170,7 +167,7 @@ run = run + 1;
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [30, 70, 70, 20];
-epochs[run]                       = 20;
+epochs[run]                       = 30;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
@@ -180,7 +177,7 @@ run = run + 1;
 #strong_branching_limit[run]       = 45; # Set very high to be 100% (full?) strong branching
 #num_features[run]                 = 7; # How modify the set of features from here?
 hidden_layers[run]                = [30, 70, 70, 20];
-epochs[run]                       = 20;
+epochs[run]                       = 40;
 outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_features[run], \
                     hidden_layers[run], epochs[run]);
 
@@ -196,14 +193,14 @@ outputs[run] = makeFileName(dataset[run], strong_branching_limit[run], num_featu
                     hidden_layers[run], epochs[run]);
 '''
 
-
-#print(dataset);
-#print(strong_branching_limit);
-#print(num_features);
-#print(hidden_layers);
-#print(epochs);
+'''
+print(dataset);
+print(strong_branching_limit);
+print(num_features);
+print(hidden_layers);
+print(epochs);
 print(outputs);
-
+'''
 
 
 print("Doing %d test runs" % run);
@@ -237,12 +234,7 @@ for r in range(run+1):
     # Then run the solver
     start=time.clock();
     print("%s, %d, %d, %s, %d" % (dataset[r], strong_branching_limit[r], num_features[r], str(hidden_layers[r]), epochs[r]));
-    branch_times = admipex1(dataDir+dataset[r], \
-                    strong_branching_limit[r], \
-                    num_features[r], \
-                    hidden_layers[r], \
-                    epochs[r]);
-    
+    (branch_times, predicts, sol_type, sol_obj_val) = admipex1(dataDir+dataset[r], strong_branching_limit[r], num_features[r], hidden_layers[r], epochs[r]);
     end = time.clock();
     print("Runtime: %s" % str(end-start));
     
@@ -261,6 +253,14 @@ for r in range(run+1):
             branch_times, \
             end-start));
 
+    op.write("\nsolution status,objective value\n%s,%s\n" % (sol_type, sol_obj_val));
+
+    op.write("\nbranch iter,predicted var\n");
+    for i in range(len(predicts)):
+        # REMEMBER ONCE THIS WORKS UNCOMMENT AUTO GIT PUSHING
+        op.write(str(predicts[i][0]) + ',' + str(predicts[i][1]) + "\n");
+    
+
     '''
     op.write(dataset[run] + ',');
     op.write(str(strong_branching_limit[run]) + ',');
@@ -275,11 +275,10 @@ for r in range(run+1):
     #   WHERE GET OUTPUT FROM? PASS FILE HANDLE OR ADD RETURN VAL(S)? 
     # what about units for clock timing?
     op.close();
-
-    # Push to git!! 
-    pushToGit(outputs[r]);
-
     
+
+    # Push to git! 
+    pushToGit(outputs[r]);
 
 
 '''

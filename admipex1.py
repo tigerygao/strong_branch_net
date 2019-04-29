@@ -43,6 +43,10 @@ strong_branching_limit = 100000;
 mynet = None;
 
 
+# Global just to make shit easy
+saved_predicts = [];
+
+
 class MySolve(CPX_CB.SolveCallback):
 
     def __call__(self):
@@ -60,7 +64,7 @@ class MyBranch(CPX_CB.BranchCallback):
     def __call__(self):
 
         #print("\n\n**************** Inside branch callback **************** (%d) \n\n" % (self.times_called+1))
-
+        global saved_predicts;
 
         self.times_called += 1;
 
@@ -118,6 +122,8 @@ class MyBranch(CPX_CB.BranchCallback):
 		predicted_candidate = mynet.predict((self.get_values(), self.get_objective_value(), self.get_objective_coefficients()));
 		print("iter %d\tpredicted_cand: %s" % (self.times_called, str(predicted_candidate.item())));	
 	
+                saved_predicts.append([self.times_called, predicted_candidate.item()]);
+
 		for i in range(self.get_num_branches()):
 			#print("i is %d" % i);
 			candidate = self.get_branch(i);
@@ -174,14 +180,16 @@ class MyNode(CPX_CB.NodeCallback):
         # print "selected node with data", self.get_node_data(bestnode)
 
 
-def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], epochs=10):
+def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], epochs=10, gpu=0):
     c = CPX.Cplex(filename)
     
     global strong_branching_limit;
     strong_branching_limit = sb_limit;
 
     global mynet;
-    mynet = StrongBranchMimic(num_features, hl, epochs);   
+    mynet = StrongBranchMimic(num_features, hl, epochs, gpu);   
+
+    global saved_predicts; # Can probably preallocate here for speed, but likely unnecessary
 
     # Random seeds
     #c.parameters.randomseed.set(0); # Do we want to fix this? Maybe average over it? TODO https://www.ibm.com/developerworks/community/forums/html/topic?id=c22d7bf0-3e4b-4191-a3c7-167d996b46cd
@@ -225,10 +233,10 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
 
 
     # solution.get_status() returns an integer code
-    print("Solution status = ", solution.get_status(), ":", end=' ')
+    #print("Solution status = ", solution.get_status(), ":", end=' ')
     # the following line prints the corresponding string
-    print(solution.status[solution.get_status()])
-    print("Objective value = ", solution.get_objective_value())
+    #print(solution.status[solution.get_status()])
+    #print("Objective value = ", solution.get_objective_value())
     print()
     '''
     x = solution.get_values(0, c.variables.get_num() - 1)
@@ -240,6 +248,10 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
     
     print("\n\n**************** important values ****************\n\n")
 
+    print("Solution status = ", solution.get_status(), ":", end=' ')
+    print("Objective value = ", solution.get_objective_value())
+    print(solution.status[solution.get_status()])
+    print()
     print("Solve callback was called ", solve_instance.times_called, "times")
     print("Branch callback was called ", branch_instance.times_called, "times")
     print("Node callback was called ", node_instance.times_called, "times")
@@ -248,7 +260,7 @@ def admipex1(filename, sb_limit=100000000, num_features=6, hl=[30, 50, 50, 10], 
 
 
 
-    return branch_instance.times_called;
+    return (branch_instance.times_called, saved_predicts, solution.status[solution.get_status()], solution.get_objective_value());
 
 
 
