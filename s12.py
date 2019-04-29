@@ -43,7 +43,7 @@ ds = "app1-2.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 1440;
+sbl = 720;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
