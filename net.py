@@ -100,7 +100,7 @@ class StrongBranchMimic():
 
 
     def compute_input(self, state):
-        input = np.expand_dims(np.array(state[0]), axis=1)
+        '''input = np.expand_dims(np.array(state[0]), axis=1)
         fractionality = np.absolute((input - np.floor(input)) - 0.5)
         input = np.concatenate((input, fractionality), axis=1)
 
@@ -126,6 +126,81 @@ class StrongBranchMimic():
         #TODO:
         #x_minus_mu = state[0] - np.average(state[0])
         #x_minus_mu_div_std = x_minus_mu / np.std(state[0])
+        '''
+        #state[0]: solution vector
+
+        #state[1]: objective value
+
+        #state[2]: objective coefficient vector
+
+
+
+        static = np.expand_dims(np.array([state[1]]), axis=1)
+
+
+
+        #solution values
+
+        input = np.expand_dims(np.array(state[0]), axis=1)
+
+        stats = self.compute_stats(input)
+
+        input = np.hstack((input, stats[-1]))
+
+        for i in range(len(stats)-1):
+
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+
+        '''
+
+        static = np.hstack((static, np.expand_dims(np.array([stats[0]]),axis=1)))
+
+        static = np.hstack((static, np.expand_dims(np.array([stats[1]]),axis=1)))
+
+        static = np.hstack((static, np.expand_dims(np.array([stats[2]]),axis=1)))
+
+        static = np.hstack((static, np.expand_dims(np.array([stats[3]]),axis=1)))
+
+        '''
+
+
+
+        #solution fractionalities
+
+        fractionalities = np.expand_dims(np.absolute((input[:,0] - np.floor(input[:,0])) - 0.5), axis=1)
+
+        stats = self.compute_stats(fractionalities)
+
+        input = np.hstack((input, fractionalities, stats[-1]))
+
+        for i in range(len(stats)-1):
+
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+
+
+
+        #objective coefficients
+
+        obj_coeffs = np.expand_dims(np.array(state[2]), axis=1)
+
+        stats = self.compute_stats(obj_coeffs)
+
+        input = np.hstack((input, obj_coeffs, stats[-1]))
+
+        for i in range(len(stats)-1):
+
+            static = np.hstack((static, np.expand_dims(np.array([stats[i]]),axis=1)))
+
+
+
+        static = np.tile(static,(input.shape[0],1))
+
+        input = np.concatenate((input, static), axis=1)
+
+        return input
+
+
+
 
 
 
