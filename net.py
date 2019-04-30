@@ -200,6 +200,19 @@ class StrongBranchMimic():
         return input
 
 
+    def compute_stats(self, arr):
+
+        mean = np.average(arr)
+
+        std = np.std(arr)
+
+        max = np.max(arr)
+
+        min = np.min(arr)
+
+        normalized = (arr - mean)/std
+
+        return (mean, std, max, min, normalized)
 
 
 
