@@ -47,7 +47,7 @@ sbl = 160;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
-nf = 7;
+nf = 19;
 
 # List of things we can change in test runs
 dataset                         = [ds]*n;
