@@ -1,0 +1,7 @@
+dataset,strong_branching_limit,num_features,hl1,hl2,hl3,hl4,epochs,num_branch_callbacks,runtime
+mine-166-5.mps.gz,10000000,19,10,20,20,10,5,1179,33.827776
+
+solution status,objective value
+MIP_optimal,-566395707.871
+
+branch iter,predicted var
