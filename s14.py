@@ -43,7 +43,7 @@ ds = "air04.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 160;
+sbl = 45;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;
