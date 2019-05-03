@@ -39,11 +39,11 @@ gpu = 0
 # Dataset if you want all of them to be same (None if you dont);
 #ds = None;
 #ds = "air04.mps.gz"; # For testing purposes, (make sure to set sbl to <12)
-ds = "rmatr100-p5.mps.gz";
+ds = "air04.mps.gz";
 
 # SBL if you want all of them to be same (None if you dont);
 #sbl = None;
-sbl = 160;
+sbl = 45;
 
 # SBL if you want all of them to be same (None if you dont);
 #nf = None;

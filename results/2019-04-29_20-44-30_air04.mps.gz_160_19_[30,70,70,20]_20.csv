@@ -1,0 +1,7 @@
+dataset,strong_branching_limit,num_features,hl1,hl2,hl3,hl4,epochs,num_branch_callbacks,runtime
+air04.mps.gz,160,19,30,70,70,20,20,0,43.148789
+
+solution status,objective value
+MIP_abort_feasible,56657.0
+
+branch iter,predicted var
